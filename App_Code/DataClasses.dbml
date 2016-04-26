@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="database2ti" Class="DataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=sqlserver2ti-r0254260.database.windows.net;Initial Catalog=database2ti;Persist Security Info=True;User ID=admin2ti" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="database2tiConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Forum" Member="Forums">
+    <Type Name="Forum">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="ParentForumId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IsCategory" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Forum_Forum" Member="Forums" ThisKey="Id" OtherKey="ParentForumId" Type="Forum" />
+      <Association Name="Forum_Topic" Member="Topics" ThisKey="Id" OtherKey="ForumId" Type="Topic" />
+      <Association Name="Forum_ForumModerator" Member="ForumModerators" ThisKey="Id" OtherKey="ForumId" Type="ForumModerator" />
+      <Association Name="Forum_Forum" Member="Forum1" ThisKey="ParentForumId" OtherKey="Id" Type="Forum" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Topic" Member="Topics">
+    <Type Name="Topic">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="ForumId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsLocked" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsPinned" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Topic_Post" Member="Posts" ThisKey="Id" OtherKey="TopicId" Type="Post" />
+      <Association Name="Forum_Topic" Member="Forum" ThisKey="ForumId" OtherKey="Id" Type="Forum" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Post" Member="Posts">
+    <Type Name="Post">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="TopicId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Content" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="Topic_Post" Member="Topic" ThisKey="TopicId" OtherKey="Id" Type="Topic" IsForeignKey="true" />
+      <Association Name="User_Post" Member="User" ThisKey="UserId" OtherKey="Id" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.[User]" Member="Users">
+    <Type Name="User">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="Char(40) NOT NULL" CanBeNull="false" />
+      <Column Name="RegistrationDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="User_Post" Member="Posts" ThisKey="Id" OtherKey="UserId" Type="Post" />
+      <Association Name="User_ForumModerator" Member="ForumModerators" ThisKey="Id" OtherKey="UserId" Type="ForumModerator" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ForumModerator" Member="ForumModerators">
+    <Type Name="ForumModerator">
+      <Column Name="ForumId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Forum_ForumModerator" Member="Forum" ThisKey="ForumId" OtherKey="Id" Type="Forum" IsForeignKey="true" />
+      <Association Name="User_ForumModerator" Member="User" ThisKey="UserId" OtherKey="Id" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
