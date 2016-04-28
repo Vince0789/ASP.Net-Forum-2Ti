@@ -14,18 +14,7 @@ public partial class ViewForum : System.Web.UI.Page
         if (int.TryParse(Request.QueryString["id"], out forumId))
         {
             Forum forum = GetForum(forumId);
-
-            foreach(Topic topic in forum.Topics)
-            {
-                if(topic.Posts.Count > 0)
-                {
-                    topic.Posts.OrderBy(post => post.CreatedDate);
-                    topic.EerstePost = topic.Posts.First();
-                    topic.LaatstePost = topic.Posts.Last();
-                }
-            }
-
-            forum.Topics.OrderByDescending(topic => topic.Posts);
+            forum.Topics.OrderByDescending(topic => topic.EerstePost.CreatedDate);
 
             LiteralForumNaam.Text = forum.Name;
             LiteralForumBeschrijving.Text = forum.Description;

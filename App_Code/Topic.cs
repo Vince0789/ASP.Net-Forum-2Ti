@@ -20,13 +20,19 @@ public partial class Topic
 
     public Post EerstePost
     {
-        get;
-        set;
+        get
+        {
+            this.Posts.OrderBy(post => post.CreatedDate);
+            return this.Posts.First();
+        }
     }
 
     public Post LaatstePost
     {
-        get;
-        set;
+        get
+        {
+            this.Posts.OrderBy(post => post.CreatedDate);
+            return this.Posts.Last();
+        }
     }
 }
