@@ -1,0 +1,16 @@
+﻿body {
+    padding-top: 70px;
+}
+
+.panel-body:not(:last-child) {
+    border-bottom: 1px solid #dddddd;
+}
+
+.panel-body h3 {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.panel-body h3 + .help-block {
+    margin-bottom: 0;
+}

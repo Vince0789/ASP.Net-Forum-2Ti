@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="database2ti" Class="DataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="database2ti" Class="AspLinqDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="WebSettings" ConnectionString="Data Source=sqlserver2ti-r0254260.database.windows.net;Initial Catalog=database2ti;Persist Security Info=True;User ID=admin2ti" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="database2tiConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Forum" Member="Forums">
     <Type Name="Forum">

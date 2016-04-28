@@ -22,7 +22,7 @@ using System.Reflection;
 
 
 [global::System.Data.Linq.Mapping.DatabaseAttribute(Name="database2ti")]
-public partial class DataClassesDataContext : System.Data.Linq.DataContext
+public partial class AspLinqDataContext : System.Data.Linq.DataContext
 {
 	
 	private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();
@@ -46,31 +46,31 @@ public partial class DataClassesDataContext : System.Data.Linq.DataContext
   partial void DeleteForumModerator(ForumModerator instance);
   #endregion
 	
-	public DataClassesDataContext() : 
+	public AspLinqDataContext() : 
 			base(global::System.Configuration.ConfigurationManager.ConnectionStrings["database2tiConnectionString"].ConnectionString, mappingSource)
 	{
 		OnCreated();
 	}
 	
-	public DataClassesDataContext(string connection) : 
+	public AspLinqDataContext(string connection) : 
 			base(connection, mappingSource)
 	{
 		OnCreated();
 	}
 	
-	public DataClassesDataContext(System.Data.IDbConnection connection) : 
+	public AspLinqDataContext(System.Data.IDbConnection connection) : 
 			base(connection, mappingSource)
 	{
 		OnCreated();
 	}
 	
-	public DataClassesDataContext(string connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
+	public AspLinqDataContext(string connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
 			base(connection, mappingSource)
 	{
 		OnCreated();
 	}
 	
-	public DataClassesDataContext(System.Data.IDbConnection connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
+	public AspLinqDataContext(System.Data.IDbConnection connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
 			base(connection, mappingSource)
 	{
 		OnCreated();

@@ -1,25 +1,32 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Layout.master" AutoEventWireup="true" CodeFile="Index.aspx.cs" Inherits="Index" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolderNavigatie" Runat="Server">
-  <ul>
-    <li>
-      <a href="#">Inloggen</a>
-    </li>
-  </ul>
-</asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolderBody" Runat="Server">
+<asp:Content ID="ContentBody" ContentPlaceHolderID="ContentPlaceHolderBody" runat="Server">
   <div>
-    Breadcrumb
+    <ol class="breadcrumb">
+    </ol>
   </div>
   <div>
-    Forum list
+    <asp:ListView ID="ListViewCategories" runat="server" OnItemDataBound="ListViewCategories_ItemDataBound">
+      <ItemTemplate>
+        <section class="panel panel-default">
+          <div class="panel-heading">
+            <h2 class="panel-title">
+              <%#Eval("Name")%>
+            </h2>
+          </div>
+          <asp:ListView ID="DataListForums" runat="server">
+            <ItemTemplate>
+                <div class="panel-body">
+                  <div>
+                    <h3><a href="Forum.aspx?id=<%#Eval("Id")%>"><%#Eval("Name")%></a></h3>
+                    <span class="help-block"><%#Eval("Description")%></span>
+                  </div>
+                </div>
+            </ItemTemplate>
+          </asp:ListView>
+        </section>
+      </ItemTemplate>
+    </asp:ListView>
   </div>
-</asp:Content>
-<asp:Content ID="Content4" ContentPlaceHolderID="ContentPlaceHolderFooter" Runat="Server">
-  Footer. Geregistreerde leden e.a.
-
-  &copy; 2016 Vince Vandormael
 </asp:Content>
 
