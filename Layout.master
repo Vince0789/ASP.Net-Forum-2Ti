@@ -50,7 +50,10 @@
   </nav>
 
   <div class="container">
-
+    <div>
+      <ol class="breadcrumb">
+      </ol>
+    </div>
     <asp:ContentPlaceHolder ID="ContentPlaceHolderBody" runat="server">
     </asp:ContentPlaceHolder>
 

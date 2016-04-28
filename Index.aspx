@@ -2,10 +2,6 @@
 
 <asp:Content ID="ContentBody" ContentPlaceHolderID="ContentPlaceHolderBody" runat="Server">
   <div>
-    <ol class="breadcrumb">
-    </ol>
-  </div>
-  <div>
     <asp:ListView ID="ListViewCategories" runat="server" OnItemDataBound="ListViewCategories_ItemDataBound">
       <ItemTemplate>
         <section class="panel panel-default">
@@ -18,7 +14,7 @@
             <ItemTemplate>
                 <div class="panel-body">
                   <div>
-                    <h3><a href="Forum.aspx?id=<%#Eval("Id")%>"><%#Eval("Name")%></a></h3>
+                    <h3><a href="ViewForum.aspx?id=<%#Eval("Id")%>"><%#Eval("Name")%></a></h3>
                     <span class="help-block"><%#Eval("Description")%></span>
                   </div>
                 </div>
