@@ -23,6 +23,17 @@ public partial class ViewForum : System.Web.UI.Page
             RepeaterTopics.DataSource = forum.Topics;
             RepeaterTopics.DataBind();
         }
+
+        ListItem[] listItems =
+        {
+            new ListItem("Pin"),
+            new ListItem("Unpin"),
+            new ListItem("Lock"),
+            new ListItem("Unlock"),
+            new ListItem("Delete")
+        };
+
+        DropDownListTopicAction.Items.AddRange(listItems);
     }
 
     protected Forum GetForum(int id)

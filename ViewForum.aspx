@@ -17,6 +17,7 @@
         <asp:Repeater ID="RepeaterTopics" runat="server">
           <ItemTemplate>
             <tr>
+              <td><asp:CheckBox ID="CheckBoxSelectTopic" runat="server" /></td>
               <td><a href="ViewTopic.aspx?id=<%#Eval("Id")%>"><%#Eval("Title")%></a></td>
               <td>Geplaatst door: <%#Eval("EerstePost.User.Name")%></td>
               <td>Geplaatst op: <%#Eval("EerstePost.CreatedDate")%></td>
@@ -28,6 +29,7 @@
       </table>
     </section>
     <section>
+      With selected: <asp:DropDownList ID="DropDownListTopicAction" runat="server"></asp:DropDownList>
       <asp:HyperLink ID="HyperLinkNewTopic" runat="server" CssClass="btn btn-primary pull-right">New topic</asp:HyperLink>
     </section>
   </div>

@@ -39,6 +39,11 @@
           </div>
         </ItemTemplate>
       </asp:Repeater>
+      <div class="row">
+        <div class="col-sm-12">
+          <asp:HyperLink ID="HyperLinkReply" runat="server" CssClass="btn btn-primary pull-right">Reply</asp:HyperLink>
+        </div>
+      </div>
     </section>
   </div>
 </asp:Content>

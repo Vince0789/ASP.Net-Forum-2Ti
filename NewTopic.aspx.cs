@@ -16,7 +16,43 @@ public partial class NewTopic : System.Web.UI.Page
 
         if(int.TryParse(Request.QueryString["forumId"], out forumId))
         {
-
+            Forum forum = GetForum(forumId);
+            this.Title = LiteralPaginaTitel.Text = "Post new topic in " + forum.Name;
+            HiddenFieldForumId.Value = forum.Id.ToString();
         }
+
+
+    }
+
+    protected Forum GetForum(int id)
+    {
+        AspLinqDataContext dc = new AspLinqDataContext();
+        return (from Forum in dc.Forums where Forum.Id == id select Forum).Single();
+    }
+
+    protected void ButtonSubmit_Click(object sender, EventArgs e)
+    {
+        AspLinqDataContext dc = new AspLinqDataContext();
+
+        Forum forum = GetForum(int.Parse(HiddenFieldForumId.Value));
+
+        Topic newTopic = new Topic();
+        newTopic.Title = TextBoxTitle.Text;
+        newTopic.IsLocked = CheckBoxLock.Checked;
+        newTopic.IsPinned = CheckBoxPin.Checked;
+        newTopic.Forum = forum;
+
+        forum.Topics.Add(newTopic);
+
+        Post newPost = new Post();
+        newPost.Topic = newTopic;
+        newPost.CreatedDate = DateTime.Now;
+        newPost.Content = TextBoxContent.Text;
+        //newPost.User = ;
+
+        newTopic.Posts.Add(newPost);
+
+        dc.Topics.InsertOnSubmit(newTopic);
+        dc.SubmitChanges();
     }
 }
