@@ -27,6 +27,9 @@
         </asp:Repeater>
       </table>
     </section>
+    <section>
+      <asp:HyperLink ID="HyperLinkNewTopic" runat="server" CssClass="btn btn-primary pull-right">New topic</asp:HyperLink>
+    </section>
   </div>
 </asp:Content>
 

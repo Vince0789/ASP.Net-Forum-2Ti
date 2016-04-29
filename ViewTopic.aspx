@@ -12,7 +12,11 @@
                   <%#Eval("User.Name")%>
                 </div>
                 <div class="panel-body">
-                  Member since: <%#Eval("User.RegistrationDate", "{0:d}")%>
+                  <ul>
+                    <li>Member since: <%#Eval("User.RegistrationDate", "{0:d}")%></li>
+                    <li>Posts: <%#Eval("User.PostCount")%></li>
+                  </ul>
+                  
                 </div>
               </div>
             </div>
@@ -21,6 +25,14 @@
                 <div class="panel-body">
                   <div><%#Eval("CreatedDate")%></div>
                   <%#Eval("Content")%>
+                  <div class="btn-group pull-right">
+                    <a class="btn btn-default" href="#">
+                      <img src="images/pencil.png" alt="Edit" width="16" height="16" />
+                    </a>
+                    <a class="btn btn-default" href="#">
+                      <img src="images/delete.png" alt="Delete" width="16" height="16" />
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>

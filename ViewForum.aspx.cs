@@ -18,6 +18,7 @@ public partial class ViewForum : System.Web.UI.Page
 
             LiteralForumNaam.Text = forum.Name;
             LiteralForumBeschrijving.Text = forum.Description;
+            HyperLinkNewTopic.NavigateUrl = "NewTopic.aspx?forumId=" + forum.Id;
 
             RepeaterTopics.DataSource = forum.Topics;
             RepeaterTopics.DataBind();
