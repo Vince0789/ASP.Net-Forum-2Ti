@@ -9,6 +9,9 @@ public partial class ViewForum : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (IsPostBack)
+            return;
+
         int forumId;
 
         if (int.TryParse(Request.QueryString["id"], out forumId))
@@ -16,6 +19,7 @@ public partial class ViewForum : System.Web.UI.Page
             Forum forum = GetForum(forumId);
             forum.Topics.OrderByDescending(topic => topic.EerstePost.CreatedDate);
 
+            Page.Title = forum.Name;
             LiteralForumNaam.Text = forum.Name;
             LiteralForumBeschrijving.Text = forum.Description;
             HyperLinkNewTopic.NavigateUrl = "NewTopic.aspx?forumId=" + forum.Id;

@@ -14,3 +14,34 @@
 .panel-body h3 + .help-block {
     margin-bottom: 0;
 }
+
+.post-panel {
+	min-height: 150px;
+}
+
+.post-container {
+	padding: 0;
+	position: relative;
+	min-height: inherit;
+}
+
+.post-miniprofile {
+	padding: 15px;
+	background-color: #f1f1f1;
+	min-height: inherit;
+}
+
+.post-content {
+	padding: 15px;
+	min-height: inherit;
+}
+
+.post-options {
+	position: absolute;
+	right: 15px;
+	bottom: 0px;
+}
+
+.asp-panel-inline {
+	display: inline;
+}

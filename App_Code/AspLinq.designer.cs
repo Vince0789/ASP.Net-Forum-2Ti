@@ -643,6 +643,8 @@ public partial class Post : INotifyPropertyChanging, INotifyPropertyChanged
 	
 	private System.DateTime _CreatedDate;
 	
+	private string _FromIP;
+	
 	private EntityRef<Topic> _Topic;
 	
 	private EntityRef<User> _User;
@@ -661,6 +663,8 @@ public partial class Post : INotifyPropertyChanging, INotifyPropertyChanged
     partial void OnContentChanged();
     partial void OnCreatedDateChanging(System.DateTime value);
     partial void OnCreatedDateChanged();
+    partial void OnFromIPChanging(string value);
+    partial void OnFromIPChanged();
     #endregion
 	
 	public Post()
@@ -774,6 +778,26 @@ public partial class Post : INotifyPropertyChanging, INotifyPropertyChanged
 				this._CreatedDate = value;
 				this.SendPropertyChanged("CreatedDate");
 				this.OnCreatedDateChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FromIP", DbType="VarChar(46) NOT NULL", CanBeNull=false)]
+	public string FromIP
+	{
+		get
+		{
+			return this._FromIP;
+		}
+		set
+		{
+			if ((this._FromIP != value))
+			{
+				this.OnFromIPChanging(value);
+				this.SendPropertyChanging();
+				this._FromIP = value;
+				this.SendPropertyChanged("FromIP");
+				this.OnFromIPChanged();
 			}
 		}
 	}
