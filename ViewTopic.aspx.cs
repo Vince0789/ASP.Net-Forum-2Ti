@@ -33,6 +33,27 @@ public partial class ViewTopic : System.Web.UI.Page
 		}
 
 		// ja!
+		BulletedList breadcrumb = Master.FindControl("BulletedListBreadCrumb") as BulletedList;
+
+		// opbouwen in omgekeerde volgorde
+		List<ListItem> items = new List<ListItem>();
+		ListItem itemTopic = new ListItem(topic.Title, "#");
+		itemTopic.Attributes.Add("class", "active");
+		items.Add(itemTopic);
+
+		Forum forum = topic.Forum;
+
+		while(forum != null)
+		{
+			items.Add(new ListItem(forum.Name, "ViewForum.aspx?id=" + forum.Id));
+			forum = forum.ParentForumId.HasValue ? GetForumById(forum.ParentForumId.Value) : null;
+		}
+		
+		items.Add(new ListItem("Forum Index", "Index.aspx"));
+
+		items.Reverse();
+		breadcrumb.Items.AddRange(items.ToArray());
+
 		Page.Title = LiteralTopicTitle.Text = topic.Title;
 		HiddenFieldTopicId.Value = topic.Id.ToString();
 
@@ -92,5 +113,11 @@ public partial class ViewTopic : System.Web.UI.Page
 	{
 		AspLinqDataContext dc = new AspLinqDataContext();
 		return (from User in dc.Users where User.Id == id select User).SingleOrDefault();
+	}
+
+	protected Forum GetForumById(int id)
+	{
+		AspLinqDataContext dc = new AspLinqDataContext();
+		return (from Forum in dc.Forums where Forum.Id == id select Forum).SingleOrDefault();
 	}
 }

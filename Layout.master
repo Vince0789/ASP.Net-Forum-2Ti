@@ -50,8 +50,7 @@
     <div class="container">
       <div class="row">
         <div class="col-sm-12">
-          <ol class="breadcrumb">
-          </ol>
+					<asp:BulletedList ID="BulletedListBreadCrumb" runat="server" RenderWhenDataEmpty="True" CssClass="breadcrumb" DisplayMode="HyperLink"></asp:BulletedList>
         </div>
       </div>
       <asp:ContentPlaceHolder ID="ContentPlaceHolderBody" runat="server">

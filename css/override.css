@@ -45,3 +45,7 @@
 .asp-panel-inline {
 	display: inline;
 }
+
+.breadcrumb > li + li::before {
+	content: "\003e";
+}
