@@ -15,6 +15,10 @@
                 <div class="panel-body">
                   <div class="col-sm-9">
                     <h3><a href="ViewForum.aspx?id=<%#Eval("Id")%>"><%#Eval("Name")%></a></h3>
+										<asp:Panel ID="PanelSubforums" runat="server" CssClass="asp-panel-inline">
+											<span class="pull-left">&#x221F;</span>
+											<asp:BulletedList ID="BulletedListSubforums" runat="server" CssClass="list-inline" DisplayMode="HyperLink"></asp:BulletedList>
+										</asp:Panel>
                     <span class="help-block"><%#Eval("Description")%></span>
                   </div>
                   <div class="col-sm-3">

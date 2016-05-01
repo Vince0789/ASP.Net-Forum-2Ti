@@ -15,15 +15,7 @@ public partial class Index : System.Web.UI.Page
 
 		Page.Title = "Forum Index";
 
-		List<Forum> parents = GetParentForums();
-		/*
-		foreach (Forum parent in parents)
-		{
-			parent.Children = GetSubForums(parent.Id);
-		}
-		*/
-
-		ListViewCategories.DataSource = parents;
+		ListViewCategories.DataSource = GetParentForums();
 		ListViewCategories.DataBind();
 	}
 
@@ -32,14 +24,6 @@ public partial class Index : System.Web.UI.Page
 		AspLinqDataContext dc = new AspLinqDataContext();
 		return (from Forum in dc.Forums where Forum.ParentForumId == null select Forum).ToList();
 	}
-
-	/*
-	private List<Forum> GetSubForums(int parentForumId)
-	{
-		AspLinqDataContext dc = new AspLinqDataContext();
-		return (from Forum in dc.Forums where Forum.ParentForumId == parentForumId select Forum).ToList();
-	}
-	*/
 
 	protected void ListViewCategories_ItemDataBound(object sender, ListViewItemEventArgs e)
 	{
@@ -52,6 +36,20 @@ public partial class Index : System.Web.UI.Page
 	protected void ListViewForums_ItemDataBound(object sender, ListViewItemEventArgs e)
 	{
 		Forum forum = e.Item.DataItem as Forum;
+		Panel panelSubforums = e.Item.FindControl("PanelSubforums") as Panel;
+		
+		panelSubforums.Visible = forum.Children.Count > 0;
+
+		if(panelSubforums.Visible)
+		{
+			BulletedList listSubforums = e.Item.FindControl("BulletedListSubforums") as BulletedList;
+
+			foreach(Forum child in forum.Children)
+			{
+				listSubforums.Items.Add(new ListItem(child.Name, "ViewForum.aspx?id=" + child.Id));
+			}
+		}
+	
 
 		if (forum.Topics.Count > 0)
 		{
