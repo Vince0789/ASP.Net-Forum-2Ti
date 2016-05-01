@@ -35,12 +35,13 @@
 									</div>
 									<div class="col-sm-9 post-content">
 										<%#Eval("Content")%>
-										<asp:BulletedList ID="BulletedListPostOptions" runat="server" CssClass="list-inline post-options" DisplayMode="HyperLink" />
+										<asp:BulletedList ID="BulletedListPostOptions" runat="server" CssClass="list-inline post-options" DisplayMode="LinkButton" OnClick="BulletedListPostOptions_Click" />
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
+					<asp:HiddenField ID="HiddenFieldPostId" runat="server" />
 				</ItemTemplate>
 			</asp:Repeater>
 			<div class="row">

@@ -13,7 +13,7 @@ public partial class ViewTopic : System.Web.UI.Page
 			return;
 
 		// ===== DEBUG DEBUG DEBUG =====
-		Session["user"] = GetUserById(2);
+		Session["user"] = GetUserById(1);
 		// =============================
 
 		// id in querystring?
@@ -27,7 +27,7 @@ public partial class ViewTopic : System.Web.UI.Page
 		Topic topic;
 
 		// bestaand topic?
-		if((topic = GetTopic(topicId)) == null)
+		if ((topic = GetTopic(topicId)) == null)
 		{
 			throw new HttpException(404, "Not Found");
 		}
@@ -43,12 +43,12 @@ public partial class ViewTopic : System.Web.UI.Page
 
 		Forum forum = topic.Forum;
 
-		while(forum != null)
+		while (forum != null)
 		{
 			items.Add(new ListItem(forum.Name, "ViewForum.aspx?id=" + forum.Id));
 			forum = forum.ParentForumId.HasValue ? GetForumById(forum.ParentForumId.Value) : null;
 		}
-		
+
 		items.Add(new ListItem("Forum Index", "Index.aspx"));
 
 		items.Reverse();
@@ -69,8 +69,7 @@ public partial class ViewTopic : System.Web.UI.Page
 
 	protected void ButtonReply_Click(object sender, EventArgs e)
 	{
-		Session["replyingToTopic"] = GetTopic(int.Parse(HiddenFieldTopicId.Value));
-		Response.Redirect("Reply.aspx");
+		Reply(GetTopic(int.Parse(HiddenFieldTopicId.Value)), null);
 	}
 
 	protected void RepeaterPosts_ItemDataBound(object sender, RepeaterItemEventArgs e)
@@ -79,25 +78,33 @@ public partial class ViewTopic : System.Web.UI.Page
 		Forum forum = GetTopic(int.Parse(HiddenFieldTopicId.Value)).Forum;
 		User user = Session["user"] as User;
 		Post post = e.Item.DataItem as Post;
+
 		bool isMod = user.IsAdmin() || forum.GetModerators().Contains(user);
+
+		// post id instellen
+		(e.Item.FindControl("HiddenFieldPostId") as HiddenField).Value = post.Id.ToString();
 
 		// post optie lijst vinden
 		BulletedList options = e.Item.FindControl("BulletedListPostOptions") as BulletedList;
 
 		// gebruiker kan eigen posts bewerken
-		if(isMod || post.User.Id == user.Id)
+		if (isMod || post.User.Id == user.Id)
 		{
 			options.Items.Add(new ListItem("Edit", "EditPost.aspx?id=" + post.Id));
 		}
 
 		// moderators opties
-		if(isMod)
+		if (isMod)
 		{
 			// toon ip boven post
 			(e.Item.FindControl("PanelModeratorPostDetails") as Panel).Visible = true;
 
-			// voeg delete optie toe aan lijst
-			options.Items.Add(new ListItem("Delete", "DeletePost.aspx?id=" + post.Id));
+			// eerste post mag niet verwijderd worden
+			if (e.Item.ItemIndex != 0)
+			{
+				// voeg delete optie toe aan lijst
+				options.Items.Add(new ListItem("Delete", "DeletePost.aspx?id=" + post.Id));
+			}
 		}
 
 		// voeg citeer optie toe aan lijst
@@ -119,5 +126,31 @@ public partial class ViewTopic : System.Web.UI.Page
 	{
 		AspLinqDataContext dc = new AspLinqDataContext();
 		return (from Forum in dc.Forums where Forum.Id == id select Forum).SingleOrDefault();
+	}
+
+	protected Post GetPostById(int id)
+	{
+		AspLinqDataContext dc = new AspLinqDataContext();
+		return (from Post in dc.Posts where Post.Id == id select Post).SingleOrDefault();
+	}
+
+	protected void BulletedListPostOptions_Click(object sender, BulletedListEventArgs e)
+	{
+		BulletedList options = sender as BulletedList;
+		RepeaterItem item = options.Parent as RepeaterItem;
+
+		if(options.Items[e.Index].Text == "Quote")
+		{
+			Topic topic = GetTopic(int.Parse(HiddenFieldTopicId.Value));
+			Post quotedPost = GetPostById(int.Parse((item.FindControl("HiddenFieldPostId") as HiddenField).Value));
+			Reply(topic, quotedPost);
+		}
+	}
+
+	protected void Reply(Topic topic, Post quotedPost)
+	{
+		Session["replyingToTopic"] = topic;
+		Session["quotedPost"] = quotedPost;
+		Response.Redirect("Reply.aspx");
 	}
 }
