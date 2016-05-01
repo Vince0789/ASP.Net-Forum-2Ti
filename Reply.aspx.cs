@@ -19,7 +19,7 @@ public partial class Reply : System.Web.UI.Page
 
 		if(quotedPost != null)
 		{
-			TextBoxContent.Text = string.Format("[quote name='{0}' date='{1}']{2}[/quote]", quotedPost.User.Name, quotedPost.CreatedDate, quotedPost.Content);
+			TextBoxContent.Text = string.Format("[quote name='{0}' date='{1}']{2}[/quote]", quotedPost.Member.Name, quotedPost.CreatedDate, quotedPost.Content);
 		}
 	}
 

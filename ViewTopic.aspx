@@ -27,10 +27,10 @@
 								</div>
 								<div class="panel-body post-container">
 									<div class="col-sm-3 post-miniprofile">
-										<%#Eval("User.Name")%>
+										<%#Eval("Member.Name")%>
 										<ul>
-											<li>Member since: <%#Eval("User.RegistrationDate", "{0:d}")%></li>
-											<li>Posts: <%#Eval("User.PostCount")%></li>
+											<li>Member since: <%#Eval("Member.RegistrationDate", "{0:d}")%></li>
+											<li>Posts: <%#Eval("Member.PostCount")%></li>
 										</ul>
 									</div>
 									<div class="col-sm-9 post-content">

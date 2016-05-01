@@ -13,10 +13,20 @@ public partial class Index : System.Web.UI.Page
 		if (IsPostBack)
 			return;
 
+		// ===== DEBUG DEBUG DEBUG =====
+		Session["member"] = GetMemberById(1);
+		// =============================
+
 		Page.Title = "Forum Index";
 
 		ListViewCategories.DataSource = GetParentForums();
 		ListViewCategories.DataBind();
+	}
+
+	protected Member GetMemberById(int id)
+	{
+		AspLinqDataContext dc = new AspLinqDataContext();
+		return (from Member in dc.Members where Member.Id == id select Member).SingleOrDefault();
 	}
 
 	private List<Forum> GetParentForums()

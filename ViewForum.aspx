@@ -45,9 +45,9 @@
 							<td>
 								<asp:CheckBox ID="CheckBoxSelectTopic" runat="server" /></td>
 							<td><a href="ViewTopic.aspx?id=<%#Eval("Id")%>"><%#Eval("Title")%></a></td>
-							<td>Geplaatst door: <%#Eval("EerstePost.User.Name")%></td>
+							<td>Geplaatst door: <%#Eval("EerstePost.Member.Name")%></td>
 							<td>Geplaatst op: <%#Eval("EerstePost.CreatedDate")%></td>
-							<td>Laatste bericht door: <%#Eval("LaatstePost.User.Name")%></td>
+							<td>Laatste bericht door: <%#Eval("LaatstePost.Member.Name")%></td>
 							<td>Laatste bericht geplaatst op: <%#Eval("LaatstePost.CreatedDate")%></td>
 						</tr>
 					</ItemTemplate>

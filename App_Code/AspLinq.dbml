@@ -28,30 +28,30 @@
     <Type Name="Post">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="TopicId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="MemberId" Storage="_UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Content" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
       <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="FromIP" Type="System.String" DbType="VarChar(46) NOT NULL" CanBeNull="false" />
       <Association Name="Topic_Post" Member="Topic" ThisKey="TopicId" OtherKey="Id" Type="Topic" IsForeignKey="true" />
-      <Association Name="User_Post" Member="User" ThisKey="UserId" OtherKey="Id" Type="User" IsForeignKey="true" />
+      <Association Name="User_Post" Member="Member" Storage="_User" ThisKey="MemberId" OtherKey="Id" Type="Member" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.[User]" Member="Users">
-    <Type Name="User">
+  <Table Name="dbo.[Member]" Member="Members">
+    <Type Name="Member">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="Password" Type="System.String" DbType="Char(40) NOT NULL" CanBeNull="false" />
       <Column Name="RegistrationDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Association Name="User_Post" Member="Posts" ThisKey="Id" OtherKey="UserId" Type="Post" />
-      <Association Name="User_ForumModerator" Member="ForumModerators" ThisKey="Id" OtherKey="UserId" Type="ForumModerator" />
+      <Association Name="User_Post" Member="Posts" ThisKey="Id" OtherKey="MemberId" Type="Post" />
+      <Association Name="User_ForumModerator" Member="ForumModerators" ThisKey="Id" OtherKey="MemberId" Type="ForumModerator" />
     </Type>
   </Table>
   <Table Name="dbo.ForumModerator" Member="ForumModerators">
     <Type Name="ForumModerator">
       <Column Name="ForumId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="MemberId" Storage="_UserId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Association Name="Forum_ForumModerator" Member="Forum" ThisKey="ForumId" OtherKey="Id" Type="Forum" IsForeignKey="true" />
-      <Association Name="User_ForumModerator" Member="User" ThisKey="UserId" OtherKey="Id" Type="User" IsForeignKey="true" />
+      <Association Name="User_ForumModerator" Member="Member" Storage="_User" ThisKey="MemberId" OtherKey="Id" Type="Member" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

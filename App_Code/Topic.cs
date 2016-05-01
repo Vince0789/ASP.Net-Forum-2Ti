@@ -8,15 +8,9 @@ using System.Web;
 /// </summary>
 public partial class Topic
 {
-    protected User author;
+    protected Member author;
     protected Post eerstePost;
     protected Post laatstePost;
-
-    public User Author
-    {
-        get;
-        set;
-    }
 
     public Post EerstePost
     {

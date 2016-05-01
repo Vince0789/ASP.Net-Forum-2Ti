@@ -12,10 +12,6 @@ public partial class ViewTopic : System.Web.UI.Page
 		if (IsPostBack)
 			return;
 
-		// ===== DEBUG DEBUG DEBUG =====
-		Session["user"] = GetUserById(1);
-		// =============================
-
 		// id in querystring?
 		int topicId;
 
@@ -76,10 +72,10 @@ public partial class ViewTopic : System.Web.UI.Page
 	{
 		// variabelen die we nodig hebben
 		Forum forum = GetTopic(int.Parse(HiddenFieldTopicId.Value)).Forum;
-		User user = Session["user"] as User;
+		Member member = Session["member"] as Member;
 		Post post = e.Item.DataItem as Post;
 
-		bool isMod = user.IsAdmin() || forum.GetModerators().Contains(user);
+		bool isMod = member.IsAdmin() || forum.GetModerators().Contains(member);
 
 		// post id instellen
 		(e.Item.FindControl("HiddenFieldPostId") as HiddenField).Value = post.Id.ToString();
@@ -88,7 +84,7 @@ public partial class ViewTopic : System.Web.UI.Page
 		BulletedList options = e.Item.FindControl("BulletedListPostOptions") as BulletedList;
 
 		// gebruiker kan eigen posts bewerken
-		if (isMod || post.User.Id == user.Id)
+		if (isMod || post.Member.Id == member.Id)
 		{
 			options.Items.Add(new ListItem("Edit", "EditPost.aspx?id=" + post.Id));
 		}
@@ -113,13 +109,7 @@ public partial class ViewTopic : System.Web.UI.Page
 
 	protected bool IsUserLoggedIn()
 	{
-		return Session["user"] is User;
-	}
-
-	protected User GetUserById(int id)
-	{
-		AspLinqDataContext dc = new AspLinqDataContext();
-		return (from User in dc.Users where User.Id == id select User).SingleOrDefault();
+		return Session["member"] is Member;
 	}
 
 	protected Forum GetForumById(int id)

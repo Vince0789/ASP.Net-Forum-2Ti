@@ -34,7 +34,7 @@
         <elementListCompartment Id="56e12869-0435-4560-b18a-37527e98de71" absoluteBounds="0.76500000000000012, 5.835, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(1.75 : 4.89589680989583); (1.75 : 5.375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(1.75 : 4.89589680989583); (1.75 : 5.375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/AspLinqDataContext/Topic/Topic_Post" />
       <nodes>
         <classShapeMoniker Id="5d418c03-9e34-4f4b-a280-6b81d8cd5eb9" />
@@ -42,13 +42,13 @@
       </nodes>
     </associationConnector>
     <classShape Id="987853bc-5a71-4fb2-85ee-57be0701d786" absoluteBounds="3.5, 5.375, 2, 1.5785953776041666">
-      <DataClassMoniker Name="/AspLinqDataContext/User" />
+      <DataClassMoniker Name="/AspLinqDataContext/Member" />
       <nestedChildShapes>
         <elementListCompartment Id="821af5c7-a41e-4af1-8938-2beca38c8dec" absoluteBounds="3.5149999999999997, 5.835, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(3.5 : 6.16429768880208); (2.75 : 6.16429768880208)]" fixedFrom="Algorithm" fixedTo="Algorithm">
-      <AssociationMoniker Name="/AspLinqDataContext/User/User_Post" />
+    <associationConnector edgePoints="[(3.5 : 6.16429768880208); (2.75 : 6.16429768880208)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/AspLinqDataContext/Member/User_Post" />
       <nodes>
         <classShapeMoniker Id="987853bc-5a71-4fb2-85ee-57be0701d786" />
         <classShapeMoniker Id="773fe186-8043-4f38-958b-cb371d052c7c" />
@@ -68,7 +68,7 @@
       </nodes>
     </associationConnector>
     <associationConnector edgePoints="[(4.4375 : 5.375); (4.4375 : 2.44399251302083)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/AspLinqDataContext/User/User_ForumModerator" />
+      <AssociationMoniker Name="/AspLinqDataContext/Member/User_ForumModerator" />
       <nodes>
         <classShapeMoniker Id="987853bc-5a71-4fb2-85ee-57be0701d786" />
         <classShapeMoniker Id="5f4405d1-9535-453e-aa37-a4f15ad927cd" />

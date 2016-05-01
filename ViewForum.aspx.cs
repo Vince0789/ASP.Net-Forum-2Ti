@@ -68,10 +68,10 @@ public partial class ViewForum : System.Web.UI.Page
 		return (from Post in dc.Posts where Post.TopicId == topicId select Post).ToList();
 	}
 
-	protected User GetAuteur(int userId)
+	protected Member GetAuteur(int memberId)
 	{
 		AspLinqDataContext dc = new AspLinqDataContext();
-		return (from User in dc.Users where User.Id == userId select User).Single();
+		return (from Member in dc.Members where Member.Id == memberId select Member).Single();
 	}
 
 	protected void ListViewSubforums_ItemDataBound(object sender, ListViewItemEventArgs e)

@@ -19,9 +19,9 @@ public partial class Forum
 		}
 	}
 
-	public List<User> GetModerators()
+	public List<Member> GetModerators()
 	{
 		AspLinqDataContext dc = new AspLinqDataContext();
-		return (from ForumModerator in dc.ForumModerators where ForumModerator.ForumId == this.Id select ForumModerator.User).ToList();
+		return (from ForumModerator in dc.ForumModerators where ForumModerator.ForumId == this.Id select ForumModerator.Member).ToList();
 	}
 }

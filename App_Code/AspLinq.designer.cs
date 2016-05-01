@@ -38,9 +38,9 @@ public partial class AspLinqDataContext : System.Data.Linq.DataContext
   partial void InsertPost(Post instance);
   partial void UpdatePost(Post instance);
   partial void DeletePost(Post instance);
-  partial void InsertUser(User instance);
-  partial void UpdateUser(User instance);
-  partial void DeleteUser(User instance);
+  partial void InsertMember(Member instance);
+  partial void UpdateMember(Member instance);
+  partial void DeleteMember(Member instance);
   partial void InsertForumModerator(ForumModerator instance);
   partial void UpdateForumModerator(ForumModerator instance);
   partial void DeleteForumModerator(ForumModerator instance);
@@ -100,11 +100,11 @@ public partial class AspLinqDataContext : System.Data.Linq.DataContext
 		}
 	}
 	
-	public System.Data.Linq.Table<User> Users
+	public System.Data.Linq.Table<Member> Members
 	{
 		get
 		{
-			return this.GetTable<User>();
+			return this.GetTable<Member>();
 		}
 	}
 	
@@ -647,7 +647,7 @@ public partial class Post : INotifyPropertyChanging, INotifyPropertyChanged
 	
 	private EntityRef<Topic> _Topic;
 	
-	private EntityRef<User> _User;
+	private EntityRef<Member> _User;
 	
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -657,8 +657,8 @@ public partial class Post : INotifyPropertyChanging, INotifyPropertyChanged
     partial void OnIdChanged();
     partial void OnTopicIdChanging(int value);
     partial void OnTopicIdChanged();
-    partial void OnUserIdChanging(int value);
-    partial void OnUserIdChanged();
+    partial void OnMemberIdChanging(int value);
+    partial void OnMemberIdChanged();
     partial void OnContentChanging(string value);
     partial void OnContentChanged();
     partial void OnCreatedDateChanging(System.DateTime value);
@@ -670,7 +670,7 @@ public partial class Post : INotifyPropertyChanging, INotifyPropertyChanged
 	public Post()
 	{
 		this._Topic = default(EntityRef<Topic>);
-		this._User = default(EntityRef<User>);
+		this._User = default(EntityRef<Member>);
 		OnCreated();
 	}
 	
@@ -719,7 +719,7 @@ public partial class Post : INotifyPropertyChanging, INotifyPropertyChanged
 	}
 	
 	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserId", DbType="Int NOT NULL")]
-	public int UserId
+	public int MemberId
 	{
 		get
 		{
@@ -733,11 +733,11 @@ public partial class Post : INotifyPropertyChanging, INotifyPropertyChanged
 				{
 					throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 				}
-				this.OnUserIdChanging(value);
+				this.OnMemberIdChanging(value);
 				this.SendPropertyChanging();
 				this._UserId = value;
-				this.SendPropertyChanged("UserId");
-				this.OnUserIdChanged();
+				this.SendPropertyChanged("MemberId");
+				this.OnMemberIdChanged();
 			}
 		}
 	}
@@ -836,8 +836,8 @@ public partial class Post : INotifyPropertyChanging, INotifyPropertyChanged
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Post", Storage="_User", ThisKey="UserId", OtherKey="Id", IsForeignKey=true)]
-	public User User
+	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Post", Storage="_User", ThisKey="MemberId", OtherKey="Id", IsForeignKey=true)]
+	public Member Member
 	{
 		get
 		{
@@ -845,7 +845,7 @@ public partial class Post : INotifyPropertyChanging, INotifyPropertyChanged
 		}
 		set
 		{
-			User previousValue = this._User.Entity;
+			Member previousValue = this._User.Entity;
 			if (((previousValue != value) 
 						|| (this._User.HasLoadedOrAssignedValue == false)))
 			{
@@ -865,7 +865,7 @@ public partial class Post : INotifyPropertyChanging, INotifyPropertyChanged
 				{
 					this._UserId = default(int);
 				}
-				this.SendPropertyChanged("User");
+				this.SendPropertyChanged("Member");
 			}
 		}
 	}
@@ -891,8 +891,8 @@ public partial class Post : INotifyPropertyChanging, INotifyPropertyChanged
 	}
 }
 
-[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.[User]")]
-public partial class User : INotifyPropertyChanging, INotifyPropertyChanged
+[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.[Member]")]
+public partial class Member : INotifyPropertyChanging, INotifyPropertyChanged
 {
 	
 	private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -923,7 +923,7 @@ public partial class User : INotifyPropertyChanging, INotifyPropertyChanged
     partial void OnRegistrationDateChanged();
     #endregion
 	
-	public User()
+	public Member()
 	{
 		this._Posts = new EntitySet<Post>(new Action<Post>(this.attach_Posts), new Action<Post>(this.detach_Posts));
 		this._ForumModerators = new EntitySet<ForumModerator>(new Action<ForumModerator>(this.attach_ForumModerators), new Action<ForumModerator>(this.detach_ForumModerators));
@@ -1010,7 +1010,7 @@ public partial class User : INotifyPropertyChanging, INotifyPropertyChanged
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Post", Storage="_Posts", ThisKey="Id", OtherKey="UserId")]
+	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Post", Storage="_Posts", ThisKey="Id", OtherKey="MemberId")]
 	public EntitySet<Post> Posts
 	{
 		get
@@ -1023,7 +1023,7 @@ public partial class User : INotifyPropertyChanging, INotifyPropertyChanged
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_ForumModerator", Storage="_ForumModerators", ThisKey="Id", OtherKey="UserId")]
+	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_ForumModerator", Storage="_ForumModerators", ThisKey="Id", OtherKey="MemberId")]
 	public EntitySet<ForumModerator> ForumModerators
 	{
 		get
@@ -1059,25 +1059,25 @@ public partial class User : INotifyPropertyChanging, INotifyPropertyChanged
 	private void attach_Posts(Post entity)
 	{
 		this.SendPropertyChanging();
-		entity.User = this;
+		entity.Member = this;
 	}
 	
 	private void detach_Posts(Post entity)
 	{
 		this.SendPropertyChanging();
-		entity.User = null;
+		entity.Member = null;
 	}
 	
 	private void attach_ForumModerators(ForumModerator entity)
 	{
 		this.SendPropertyChanging();
-		entity.User = this;
+		entity.Member = this;
 	}
 	
 	private void detach_ForumModerators(ForumModerator entity)
 	{
 		this.SendPropertyChanging();
-		entity.User = null;
+		entity.Member = null;
 	}
 }
 
@@ -1093,7 +1093,7 @@ public partial class ForumModerator : INotifyPropertyChanging, INotifyPropertyCh
 	
 	private EntityRef<Forum> _Forum;
 	
-	private EntityRef<User> _User;
+	private EntityRef<Member> _User;
 	
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -1101,14 +1101,14 @@ public partial class ForumModerator : INotifyPropertyChanging, INotifyPropertyCh
     partial void OnCreated();
     partial void OnForumIdChanging(int value);
     partial void OnForumIdChanged();
-    partial void OnUserIdChanging(int value);
-    partial void OnUserIdChanged();
+    partial void OnMemberIdChanging(int value);
+    partial void OnMemberIdChanged();
     #endregion
 	
 	public ForumModerator()
 	{
 		this._Forum = default(EntityRef<Forum>);
-		this._User = default(EntityRef<User>);
+		this._User = default(EntityRef<Member>);
 		OnCreated();
 	}
 	
@@ -1137,7 +1137,7 @@ public partial class ForumModerator : INotifyPropertyChanging, INotifyPropertyCh
 	}
 	
 	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserId", DbType="Int NOT NULL", IsPrimaryKey=true)]
-	public int UserId
+	public int MemberId
 	{
 		get
 		{
@@ -1151,11 +1151,11 @@ public partial class ForumModerator : INotifyPropertyChanging, INotifyPropertyCh
 				{
 					throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 				}
-				this.OnUserIdChanging(value);
+				this.OnMemberIdChanging(value);
 				this.SendPropertyChanging();
 				this._UserId = value;
-				this.SendPropertyChanged("UserId");
-				this.OnUserIdChanged();
+				this.SendPropertyChanged("MemberId");
+				this.OnMemberIdChanged();
 			}
 		}
 	}
@@ -1194,8 +1194,8 @@ public partial class ForumModerator : INotifyPropertyChanging, INotifyPropertyCh
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_ForumModerator", Storage="_User", ThisKey="UserId", OtherKey="Id", IsForeignKey=true)]
-	public User User
+	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_ForumModerator", Storage="_User", ThisKey="MemberId", OtherKey="Id", IsForeignKey=true)]
+	public Member Member
 	{
 		get
 		{
@@ -1203,7 +1203,7 @@ public partial class ForumModerator : INotifyPropertyChanging, INotifyPropertyCh
 		}
 		set
 		{
-			User previousValue = this._User.Entity;
+			Member previousValue = this._User.Entity;
 			if (((previousValue != value) 
 						|| (this._User.HasLoadedOrAssignedValue == false)))
 			{
@@ -1223,7 +1223,7 @@ public partial class ForumModerator : INotifyPropertyChanging, INotifyPropertyCh
 				{
 					this._UserId = default(int);
 				}
-				this.SendPropertyChanged("User");
+				this.SendPropertyChanged("Member");
 			}
 		}
 	}

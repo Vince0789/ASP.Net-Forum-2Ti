@@ -33,27 +33,29 @@ public partial class NewTopic : System.Web.UI.Page
 	protected void ButtonSubmit_Click(object sender, EventArgs e)
 	{
 		AspLinqDataContext dc = new AspLinqDataContext();
-
 		Forum forum = GetForum(int.Parse(HiddenFieldForumId.Value));
 
+		// insert topic
 		Topic newTopic = new Topic();
 		newTopic.Title = TextBoxTitle.Text;
+		newTopic.ForumId = forum.Id;
 		newTopic.IsLocked = CheckBoxLock.Checked;
 		newTopic.IsPinned = CheckBoxPin.Checked;
-		newTopic.Forum = forum;
-
-		forum.Topics.Add(newTopic);
-
-		Post newPost = new Post();
-		newPost.Topic = newTopic;
-		newPost.CreatedDate = DateTime.Now;
-		newPost.Content = TextBoxContent.Text;
-		newPost.FromIP = Request.UserHostAddress;
-		//newPost.User = ;
-
-		newTopic.Posts.Add(newPost);
 
 		dc.Topics.InsertOnSubmit(newTopic);
 		dc.SubmitChanges();
+
+		// insert post
+		Post newPost = new Post();
+		newPost.TopicId = newTopic.Id;
+		newPost.MemberId = (Session["member"] as Member).Id;
+		newPost.Content = TextBoxContent.Text;
+		newPost.CreatedDate = DateTime.Now;
+		newPost.FromIP = Request.UserHostAddress;
+
+		dc.Posts.InsertOnSubmit(newPost);
+		dc.SubmitChanges();
+
+		Response.Redirect("~/ViewTopic.aspx?id=" + newTopic.Id);
 	}
 }

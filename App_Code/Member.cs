@@ -4,9 +4,9 @@ using System.Linq;
 using System.Web;
 
 /// <summary>
-/// Summary description for User
+/// Summary description for Member
 /// </summary>
-public partial class User
+public partial class Member
 {
 	protected int postCount;
 
