@@ -17,10 +17,26 @@ public partial class ViewForum : System.Web.UI.Page
 		if (!int.TryParse(Request.QueryString["id"], out forumId))
 			throw new HttpException(400, "Bad Request");
 
-		Forum forum = GetForum(forumId);
+		Forum forum = GetForumById(forumId);
 
 		if(forum == null)
 			throw new HttpException(404, "Not Found");
+
+		// breadcrumb opbouwen in omgekeerde volgorde
+		BulletedList breadcrumb = Master.FindControl("BulletedListBreadCrumb") as BulletedList;
+		List<ListItem> items = new List<ListItem>();
+		Forum breadcrumbForum = forum;
+
+		while (breadcrumbForum != null)
+		{
+			items.Add(new ListItem(breadcrumbForum.Name, "ViewForum.aspx?id=" + breadcrumbForum.Id));
+			breadcrumbForum = breadcrumbForum.ParentForumId.HasValue ? GetForumById(breadcrumbForum.ParentForumId.Value) : null;
+		}
+
+		items.Add(new ListItem("Forum Index", "Index.aspx"));
+		items.Reverse();
+		breadcrumb.Items.AddRange(items.ToArray());
+		// end breadcrumb
 
 		Page.Title = forum.Name;
 		LiteralForumNaam.Text = forum.Name;
@@ -56,7 +72,7 @@ public partial class ViewForum : System.Web.UI.Page
 		}
 	}
 
-	protected Forum GetForum(int id)
+	protected Forum GetForumById(int id)
 	{
 		AspLinqDataContext dc = new AspLinqDataContext();
 		return (from Forum in dc.Forums where Forum.Id == id select Forum).SingleOrDefault();

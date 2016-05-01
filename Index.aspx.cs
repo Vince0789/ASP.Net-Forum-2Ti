@@ -21,6 +21,9 @@ public partial class Index : System.Web.UI.Page
 
 		ListViewCategories.DataSource = GetParentForums();
 		ListViewCategories.DataBind();
+
+		BulletedList breadcrumb = Master.FindControl("BulletedListBreadCrumb") as BulletedList;
+		breadcrumb.Items.Add(new ListItem("Forum Index", "#"));
 	}
 
 	protected Member GetMemberById(int id)
@@ -59,7 +62,6 @@ public partial class Index : System.Web.UI.Page
 				listSubforums.Items.Add(new ListItem(child.Name, "ViewForum.aspx?id=" + child.Id));
 			}
 		}
-	
 
 		if (forum.Topics.Count > 0)
 		{
