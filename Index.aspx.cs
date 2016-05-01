@@ -16,10 +16,12 @@ public partial class Index : System.Web.UI.Page
 		Page.Title = "Forum Index";
 
 		List<Forum> parents = GetParentForums();
+		/*
 		foreach (Forum parent in parents)
 		{
 			parent.Children = GetSubForums(parent.Id);
 		}
+		*/
 
 		ListViewCategories.DataSource = parents;
 		ListViewCategories.DataBind();
@@ -31,11 +33,13 @@ public partial class Index : System.Web.UI.Page
 		return (from Forum in dc.Forums where Forum.ParentForumId == null select Forum).ToList();
 	}
 
+	/*
 	private List<Forum> GetSubForums(int parentForumId)
 	{
 		AspLinqDataContext dc = new AspLinqDataContext();
 		return (from Forum in dc.Forums where Forum.ParentForumId == parentForumId select Forum).ToList();
 	}
+	*/
 
 	protected void ListViewCategories_ItemDataBound(object sender, ListViewItemEventArgs e)
 	{

@@ -12,8 +12,11 @@ public partial class Forum
 
 	public List<Forum> Children
 	{
-		get;
-		set;
+		get
+		{
+			AspLinqDataContext dc = new AspLinqDataContext();
+			return (from Forum in dc.Forums where Forum.ParentForumId == this.Id select Forum).ToList();
+		}
 	}
 
 	public List<User> GetModerators()
