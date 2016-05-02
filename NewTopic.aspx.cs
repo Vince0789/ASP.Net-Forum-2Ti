@@ -14,15 +14,16 @@ public partial class NewTopic : System.Web.UI.Page
 
 		int forumId;
 
-		if (int.TryParse(Request.QueryString["forumId"], out forumId))
-		{
-			Forum forum = GetForum(forumId);
-			this.Title = LiteralPaginaTitel.Text = "Post new topic in " + forum.Name;
-			HiddenFieldForumId.Value = forum.Id.ToString();
-		}
+        if (!int.TryParse(Request.QueryString["forumId"], out forumId))
+            throw new HttpException(400, "Bad Request");
 
+		Forum forum = GetForum(forumId);
+		this.Title = LiteralPaginaTitel.Text = "Post new topic in " + forum.Name;
+		HiddenFieldForumId.Value = forum.Id.ToString();
 
-	}
+        (Master as Layout).GenerateBreadCrumb(forum);
+        (Master.FindControl("BulletedListBreadCrumb") as BulletedList).Items.Add(new ListItem("Posting new topic", "#"));
+    }
 
 	protected Forum GetForum(int id)
 	{

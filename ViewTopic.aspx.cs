@@ -16,39 +16,17 @@ public partial class ViewTopic : System.Web.UI.Page
 		int topicId;
 
 		if (!int.TryParse(Request.QueryString["id"], out topicId))
-		{
-			throw new HttpException(400, "Bad Request");
-		}
+		    throw new HttpException(400, "Bad Request");
 
 		Topic topic;
 
 		// bestaand topic?
 		if ((topic = GetTopic(topicId)) == null)
-		{
-			throw new HttpException(404, "Not Found");
-		}
+		    throw new HttpException(404, "Not Found");
 
 		// ja!
-		BulletedList breadcrumb = Master.FindControl("BulletedListBreadCrumb") as BulletedList;
-
-		// opbouwen in omgekeerde volgorde
-		List<ListItem> items = new List<ListItem>();
-		ListItem itemTopic = new ListItem(topic.Title, "#");
-		itemTopic.Attributes.Add("class", "active");
-		items.Add(itemTopic);
-
-		Forum forum = topic.Forum;
-
-		while (forum != null)
-		{
-			items.Add(new ListItem(forum.Name, "ViewForum.aspx?id=" + forum.Id));
-			forum = forum.ParentForumId.HasValue ? GetForumById(forum.ParentForumId.Value) : null;
-		}
-
-		items.Add(new ListItem("Forum Index", "Index.aspx"));
-
-		items.Reverse();
-		breadcrumb.Items.AddRange(items.ToArray());
+        (Master as Layout).GenerateBreadCrumb(topic.Forum);
+        (Master.FindControl("BulletedListBreadCrumb") as BulletedList).Items.Add(new ListItem(topic.Title, "#"));
 
 		Page.Title = LiteralTopicTitle.Text = topic.Title;
 		HiddenFieldTopicId.Value = topic.Id.ToString();

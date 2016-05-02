@@ -21,6 +21,8 @@ public partial class Reply : System.Web.UI.Page
 		{
 			TextBoxContent.Text = string.Format("[quote name='{0}' date='{1}']{2}[/quote]", quotedPost.Member.Name, quotedPost.CreatedDate, quotedPost.Content);
 		}
+
+        (Master as Layout).GenerateBreadCrumb(topic.Forum);
 	}
 
 	protected void ButtonSubmit_Click(object sender, EventArgs e)

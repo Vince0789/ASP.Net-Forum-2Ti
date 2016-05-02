@@ -22,7 +22,8 @@ public partial class ViewForum : System.Web.UI.Page
 		if(forum == null)
 			throw new HttpException(404, "Not Found");
 
-		// breadcrumb opbouwen in omgekeerde volgorde
+        // breadcrumb opbouwen in omgekeerde volgorde
+        /*
 		BulletedList breadcrumb = Master.FindControl("BulletedListBreadCrumb") as BulletedList;
 		List<ListItem> items = new List<ListItem>();
 		Forum breadcrumbForum = forum;
@@ -37,6 +38,8 @@ public partial class ViewForum : System.Web.UI.Page
 		items.Reverse();
 		breadcrumb.Items.AddRange(items.ToArray());
 		// end breadcrumb
+        */
+        (Master as Layout).GenerateBreadCrumb(forum);
 
 		Page.Title = forum.Name;
 		LiteralForumNaam.Text = forum.Name;

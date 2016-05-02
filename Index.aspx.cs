@@ -22,8 +22,7 @@ public partial class Index : System.Web.UI.Page
 		ListViewCategories.DataSource = GetParentForums();
 		ListViewCategories.DataBind();
 
-		BulletedList breadcrumb = Master.FindControl("BulletedListBreadCrumb") as BulletedList;
-		breadcrumb.Items.Add(new ListItem("Forum Index", "#"));
+        (Master as Layout).GenerateBreadCrumb(null);
 	}
 
 	protected Member GetMemberById(int id)
