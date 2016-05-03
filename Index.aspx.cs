@@ -19,11 +19,17 @@ public partial class Index : System.Web.UI.Page
 
 		Page.Title = "Forum Index";
 
-        ListViewCategories.DataSource = new BLForum().GetParentForums();
+		ListViewCategories.DataSource = new BLForum().GetParentForums();
 		ListViewCategories.DataBind();
 
-        Layout masterPage = Master as Layout;
-        masterPage.GenerateBreadCrumb(null);
+		Layout masterPage = Master as Layout;
+		masterPage.GenerateBreadCrumb(null);
+
+		LiteralTotalPosts.Text = new BLPost().CountAll().ToString();
+
+		BLMember blMember = new BLMember();
+		LiteralTotalMembers.Text = blMember.CountAll().ToString();
+		LiteralNewestMember.Text = blMember.GetNewestMember().Name;
 	}
 
 	protected Member GetMemberById(int id)
@@ -44,14 +50,14 @@ public partial class Index : System.Web.UI.Page
 	{
 		Forum forum = e.Item.DataItem as Forum;
 		Panel panelSubforums = e.Item.FindControl("PanelSubforums") as Panel;
-		
+
 		panelSubforums.Visible = forum.Children.Count > 0;
 
-		if(panelSubforums.Visible)
+		if (panelSubforums.Visible)
 		{
 			BulletedList listSubforums = e.Item.FindControl("BulletedListSubforums") as BulletedList;
 
-			foreach(Forum child in forum.Children)
+			foreach (Forum child in forum.Children)
 			{
 				listSubforums.Items.Add(new ListItem(child.Name, "ViewForum.aspx?id=" + child.Id));
 			}

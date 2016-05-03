@@ -8,12 +8,16 @@ using System.Web;
 /// </summary>
 public class BLPost
 {
-    protected AspLinqDataContext dc;
+	protected AspLinqDataContext dc;
 
-    public BLPost()
-    {
-        dc = new AspLinqDataContext();
-    }
+	public BLPost()
+	{
+		dc = new AspLinqDataContext();
+	}
 
+	public int CountAll()
+	{
+		return dc.Posts.Count();
+	}
 
 }

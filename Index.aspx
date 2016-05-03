@@ -31,6 +31,19 @@
         </section>
       </ItemTemplate>
     </asp:ListView>
+		<footer class="panel panel-default">
+			<div class="panel-body text-center">
+				<div class="col-sm-4">
+					<strong class="badge"><asp:Literal ID="LiteralTotalPosts" runat="server" Text="0"></asp:Literal></strong> total posts
+				</div>
+				<div class="col-sm-4">
+					<strong class="badge"><asp:Literal ID="LiteralTotalMembers" runat="server" Text="0"></asp:Literal></strong> total members
+				</div>
+				<div class="col-sm-4">
+					<strong class="badge"><asp:Literal ID="LiteralNewestMember" runat="server" Text="Unknown"></asp:Literal></strong> newest member
+				</div>
+			</div>
+		</footer>
   </div>
 </asp:Content>
 

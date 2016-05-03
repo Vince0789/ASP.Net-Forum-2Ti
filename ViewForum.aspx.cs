@@ -19,10 +19,10 @@ public partial class ViewForum : System.Web.UI.Page
 
 		Forum forum = new BLForum().GetForumById(forumId);
 
-		if(forum == null)
+		if (forum == null)
 			throw new HttpException(404, "Not Found");
 
-        (Master as Layout).GenerateBreadCrumb(forum);
+		(Master as Layout).GenerateBreadCrumb(forum);
 
 		Page.Title = forum.Name;
 		LiteralForumNaam.Text = forum.Name;
@@ -31,17 +31,17 @@ public partial class ViewForum : System.Web.UI.Page
 		PanelSubforums.Visible = forum.Children.Count > 0;
 		PanelTopicList.Visible = !forum.IsCategory;
 
-		if(PanelSubforums.Visible)
+		if (PanelSubforums.Visible)
 		{
 			ListViewSubforums.DataSource = forum.Children;
 			ListViewSubforums.DataBind();
 		}
 
 		if (PanelTopicList.Visible)
-        { 
+		{
 			HyperLinkNewTopic.NavigateUrl = "NewTopic.aspx?forumId=" + forum.Id;
 
-			RepeaterTopics.DataSource = forum.Topics.OrderByDescending(topic => topic.LaatstePost.CreatedDate);
+			RepeaterTopics.DataSource = forum.Topics.OrderByDescending(topic => topic.IsPinned).ThenByDescending(topic => topic.LaatstePost.CreatedDate);
 			RepeaterTopics.DataBind();
 
 			ListItem[] listItems =
@@ -57,18 +57,6 @@ public partial class ViewForum : System.Web.UI.Page
 		}
 	}
 
-	protected List<Post> GetPostsInTopic(int topicId)
-	{
-		AspLinqDataContext dc = new AspLinqDataContext();
-		return (from Post in dc.Posts where Post.TopicId == topicId select Post).ToList();
-	}
-
-	protected Member GetAuteur(int memberId)
-	{
-		AspLinqDataContext dc = new AspLinqDataContext();
-		return (from Member in dc.Members where Member.Id == memberId select Member).Single();
-	}
-
 	protected void ListViewSubforums_ItemDataBound(object sender, ListViewItemEventArgs e)
 	{
 		Forum forum = e.Item.DataItem as Forum;
@@ -81,5 +69,18 @@ public partial class ViewForum : System.Web.UI.Page
 			Literal postCount = (Literal)e.Item.FindControl("LiteralPostCount");
 			postCount.Text = (forum.Topics.Sum(topic => topic.Posts.Count)).ToString();
 		}
+	}
+
+	protected void RepeaterTopics_ItemDataBound(object sender, RepeaterItemEventArgs e)
+	{
+		Topic topic = e.Item.DataItem as Topic;
+
+		(e.Item.FindControl("LabelTopicPinned") as Label).Visible = topic.IsPinned;
+		(e.Item.FindControl("ImageTopicLocked") as Image).Visible = topic.IsLocked;
+
+		Label labelPostsInTopic = e.Item.FindControl("LabelPostsInTopic") as Label;
+		int replies = topic.Posts.Count - 1;
+		labelPostsInTopic.Text = replies.ToString() + "&nbsp;";
+		labelPostsInTopic.Text += (replies == 1) ? "reply" : "replies";
 	}
 }

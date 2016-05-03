@@ -39,16 +39,25 @@
 	<asp:Panel ID="PanelTopicList" runat="server">
 		<section>
 			<table class="table">
-				<asp:Repeater ID="RepeaterTopics" runat="server">
+				<asp:Repeater ID="RepeaterTopics" runat="server" OnItemDataBound="RepeaterTopics_ItemDataBound">
 					<ItemTemplate>
 						<tr>
 							<td>
-								<asp:CheckBox ID="CheckBoxSelectTopic" runat="server" /></td>
-							<td><a href="ViewTopic.aspx?id=<%#Eval("Id")%>"><%#Eval("Title")%></a></td>
-							<td>Geplaatst door: <%#Eval("EerstePost.Member.Name")%></td>
-							<td>Geplaatst op: <%#Eval("EerstePost.CreatedDate")%></td>
-							<td>Laatste bericht door: <%#Eval("LaatstePost.Member.Name")%></td>
-							<td>Laatste bericht geplaatst op: <%#Eval("LaatstePost.CreatedDate")%></td>
+								<asp:Image ID="ImageTopicLocked" runat="server" Width="16" Height="16" ImageUrl="~/images/lock.png" AlternateText="Locked" ToolTip="Locked" Visible="false" />
+							</td>
+							<td>
+								<asp:Label ID="LabelTopicPinned" runat="server" Text="Pinned" CssClass="badge" Visible="false" />
+								<a href="ViewTopic.aspx?id=<%#Eval("Id")%>"><%#Eval("Title")%></a><br />
+								Started by <%#Eval("EerstePost.Member.Name")%>, <abbr class="timeago" title="<%#Eval("EerstePost.CreatedDate", "{0:o}")%>"><%#Eval("EerstePost.CreatedDate", "{0:dd MMM yyyy}")%></abbr> 
+							</td>
+							<td>
+								<asp:Label ID="LabelPostsInTopic" runat="server" Text="Label"></asp:Label>
+							</td>
+							<td>
+								<%#Eval("LaatstePost.Member.Name")%><br />
+								<abbr class="timeago" title="<%#Eval("LaatstePost.CreatedDate", "{0:o}")%>"><%#Eval("LaatstePost.CreatedDate", "{0:dd MMM yyyy}")%></abbr>
+							</td>
+							<td><asp:CheckBox ID="CheckBoxSelectTopic" runat="server" /></td>
 						</tr>
 					</ItemTemplate>
 				</asp:Repeater>
