@@ -29,7 +29,7 @@
                   <div class="col-sm-3 post-miniprofile">
                     <%#Eval("Member.Name")%>
                     <ul>
-                      <li>Member since: <%#Eval("Member.RegistrationDate", "{0:d}")%></li>
+                      <li>Member since: <%#Eval("Member.RegistrationDate", "{0:dd MMM yyyy}")%></li>
                       <li>Posts: <%#Eval("Member.PostCount")%></li>
                     </ul>
                   </div>

@@ -19,7 +19,7 @@ public partial class Index : System.Web.UI.Page
 
 		Page.Title = "Forum Index";
 
-		ListViewCategories.DataSource = GetParentForums();
+        ListViewCategories.DataSource = new BLForum().GetParentForums();
 		ListViewCategories.DataBind();
 
         Layout masterPage = Master as Layout;
@@ -30,12 +30,6 @@ public partial class Index : System.Web.UI.Page
 	{
 		AspLinqDataContext dc = new AspLinqDataContext();
 		return (from Member in dc.Members where Member.Id == id select Member).SingleOrDefault();
-	}
-
-	private List<Forum> GetParentForums()
-	{
-		AspLinqDataContext dc = new AspLinqDataContext();
-		return (from Forum in dc.Forums where Forum.ParentForumId == null select Forum).ToList();
 	}
 
 	protected void ListViewCategories_ItemDataBound(object sender, ListViewItemEventArgs e)

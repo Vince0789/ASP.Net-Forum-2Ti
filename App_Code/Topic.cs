@@ -16,8 +16,7 @@ public partial class Topic
     {
         get
         {
-            this.Posts.OrderBy(post => post.CreatedDate);
-            return this.Posts.First();
+            return this.Posts.OrderBy(post => post.CreatedDate).FirstOrDefault();
         }
     }
 
@@ -25,8 +24,7 @@ public partial class Topic
     {
         get
         {
-            this.Posts.OrderBy(post => post.CreatedDate);
-            return this.Posts.Last();
+            return this.Posts.OrderBy(post => post.CreatedDate).LastOrDefault();
         }
     }
 }

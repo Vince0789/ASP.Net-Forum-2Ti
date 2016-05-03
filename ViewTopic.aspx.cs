@@ -31,7 +31,7 @@ public partial class ViewTopic : System.Web.UI.Page
 		Page.Title = LiteralTopicTitle.Text = topic.Title;
 		HiddenFieldTopicId.Value = topic.Id.ToString();
 
-		RepeaterPosts.DataSource = topic.Posts;
+		RepeaterPosts.DataSource = topic.Posts.OrderBy(post => post.CreatedDate);
 		RepeaterPosts.DataBind();
 	}
 
@@ -85,17 +85,6 @@ public partial class ViewTopic : System.Web.UI.Page
             // voeg citeer optie toe aan lijst
             options.Items.Add(new ListItem("Quote", "Reply.aspx"));
         }		
-	}
-
-	protected bool IsUserLoggedIn()
-	{
-		return Session["member"] is Member;
-	}
-
-	protected Forum GetForumById(int id)
-	{
-		AspLinqDataContext dc = new AspLinqDataContext();
-		return (from Forum in dc.Forums where Forum.Id == id select Forum).SingleOrDefault();
 	}
 
 	protected Post GetPostById(int id)

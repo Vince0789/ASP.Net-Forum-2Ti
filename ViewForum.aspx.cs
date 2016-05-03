@@ -17,28 +17,11 @@ public partial class ViewForum : System.Web.UI.Page
 		if (!int.TryParse(Request.QueryString["id"], out forumId))
 			throw new HttpException(400, "Bad Request");
 
-		Forum forum = GetForumById(forumId);
+		Forum forum = new BLForum().GetForumById(forumId);
 
 		if(forum == null)
 			throw new HttpException(404, "Not Found");
 
-        // breadcrumb opbouwen in omgekeerde volgorde
-        /*
-		BulletedList breadcrumb = Master.FindControl("BulletedListBreadCrumb") as BulletedList;
-		List<ListItem> items = new List<ListItem>();
-		Forum breadcrumbForum = forum;
-
-		while (breadcrumbForum != null)
-		{
-			items.Add(new ListItem(breadcrumbForum.Name, "ViewForum.aspx?id=" + breadcrumbForum.Id));
-			breadcrumbForum = breadcrumbForum.ParentForumId.HasValue ? GetForumById(breadcrumbForum.ParentForumId.Value) : null;
-		}
-
-		items.Add(new ListItem("Forum Index", "Index.aspx"));
-		items.Reverse();
-		breadcrumb.Items.AddRange(items.ToArray());
-		// end breadcrumb
-        */
         (Master as Layout).GenerateBreadCrumb(forum);
 
 		Page.Title = forum.Name;
@@ -55,11 +38,10 @@ public partial class ViewForum : System.Web.UI.Page
 		}
 
 		if (PanelTopicList.Visible)
-		{
-			forum.Topics.OrderByDescending(topic => topic.EerstePost.CreatedDate);
+        { 
 			HyperLinkNewTopic.NavigateUrl = "NewTopic.aspx?forumId=" + forum.Id;
 
-			RepeaterTopics.DataSource = forum.Topics;
+			RepeaterTopics.DataSource = forum.Topics.OrderByDescending(topic => topic.LaatstePost.CreatedDate);
 			RepeaterTopics.DataBind();
 
 			ListItem[] listItems =
@@ -73,12 +55,6 @@ public partial class ViewForum : System.Web.UI.Page
 
 			DropDownListTopicAction.Items.AddRange(listItems);
 		}
-	}
-
-	protected Forum GetForumById(int id)
-	{
-		AspLinqDataContext dc = new AspLinqDataContext();
-		return (from Forum in dc.Forums where Forum.Id == id select Forum).SingleOrDefault();
 	}
 
 	protected List<Post> GetPostsInTopic(int topicId)
