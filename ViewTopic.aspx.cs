@@ -69,7 +69,7 @@ public partial class ViewTopic : System.Web.UI.Page
             }
 
             // toon ip boven post
-            (e.Item.FindControl("PanelModeratorPostDetails") as Panel).Visible = IsMod;
+            (e.Item.FindControl("PanelModeratorPostDetails") as Panel).Visible = isMod;
 
             // moderators opties
             if (isMod)

@@ -1,9 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Layout.master" AutoEventWireup="true" CodeFile="Index.aspx.cs" Inherits="Index" %>
 
-<asp:Content ID="ContentUserMenu" ContentPlaceHolderID="ContentPlaceHolderUserMenu" runat="server">
-  <asp:BulletedList ID="BulletedListUserMenu" runat="server" CssClass="nav navbar-nav navbar-right" />
-</asp:Content>
-
 <asp:Content ID="ContentBody" ContentPlaceHolderID="ContentPlaceHolderBody" runat="Server">
   <div>
     <asp:ListView ID="ListViewCategories" runat="server" OnItemDataBound="ListViewCategories_ItemDataBound">

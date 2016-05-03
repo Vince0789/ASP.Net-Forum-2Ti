@@ -42,7 +42,7 @@
           <ul class="nav navbar-nav">
             <li class="active"><a href="#">Home</a></li>
           </ul>
-          <asp:ContentPlaceHolder ID="ContentPlaceHolderUserMenu" runat="server"></asp:ContentPlaceHolder>
+          <asp:BulletedList ID="BulletedListUserMenu" runat="server" CssClass="nav navbar-nav navbar-right" DisplayMode="HyperLink"></asp:BulletedList>
         </div>
         <!--/.nav-collapse -->
       </div>
@@ -54,8 +54,7 @@
 					<asp:BulletedList ID="BulletedListBreadCrumb" runat="server" RenderWhenDataEmpty="True" CssClass="breadcrumb" DisplayMode="HyperLink"></asp:BulletedList>
         </div>
       </div>
-      <asp:ContentPlaceHolder ID="ContentPlaceHolderBody" runat="server">
-      </asp:ContentPlaceHolder>
+      <asp:ContentPlaceHolder ID="ContentPlaceHolderBody" runat="server" />
 
     </div>
     <!-- /.container -->

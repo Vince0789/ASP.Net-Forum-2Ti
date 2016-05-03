@@ -11,6 +11,25 @@ public partial class Layout : System.Web.UI.MasterPage
     {
         if (IsPostBack)
             return;
+
+        Member member = (Session["member"] as Member);
+
+        if(member != null)
+        {
+            BulletedListUserMenu.Items.Add(new ListItem(member.Name, "UserCP.aspx"));
+
+            if(member.IsAdmin())
+            {
+                BulletedListUserMenu.Items.Add(new ListItem("Admin CP", "AdminCP.aspx"));
+            }
+
+            BulletedListUserMenu.Items.Add(new ListItem("Logout", "Login.aspx?do=logout"));
+        }
+        else
+        {
+            BulletedListUserMenu.Items.Add(new ListItem("Register", "Registration.aspx"));
+            BulletedListUserMenu.Items.Add(new ListItem("Login", "Login.aspx"));
+        }
     }
 
     public void GenerateBreadCrumb(Forum lastChild)

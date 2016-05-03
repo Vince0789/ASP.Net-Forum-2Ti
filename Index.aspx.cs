@@ -22,7 +22,8 @@ public partial class Index : System.Web.UI.Page
 		ListViewCategories.DataSource = GetParentForums();
 		ListViewCategories.DataBind();
 
-        (Master as Layout).GenerateBreadCrumb(null);
+        Layout masterPage = Master as Layout;
+        masterPage.GenerateBreadCrumb(null);
 	}
 
 	protected Member GetMemberById(int id)
