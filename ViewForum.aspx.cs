@@ -39,6 +39,9 @@ public partial class ViewForum : System.Web.UI.Page
 
 		if (PanelTopicList.Visible)
 		{
+			string moderators = string.Join(", ", forum.ForumModerators.Select(fm => fm.Member.Name));
+			LabelForumModerators.Text = (moderators.Length > 0) ? moderators : "Administrators";
+
 			HyperLinkNewTopic.NavigateUrl = "NewTopic.aspx?forumId=" + forum.Id;
 
 			RepeaterTopics.DataSource = forum.Topics.OrderByDescending(topic => topic.IsPinned).ThenByDescending(topic => topic.LaatstePost.CreatedDate);

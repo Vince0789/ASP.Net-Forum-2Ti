@@ -9,7 +9,10 @@
 			</h2>
 		</div>
 		<div class="panel-body">
-			<asp:Literal ID="LiteralForumBeschrijving" runat="server"></asp:Literal>
+			<p><asp:Literal ID="LiteralForumBeschrijving" runat="server"></asp:Literal></p>
+			<p class="text-muted">
+				Moderators of this forum: <asp:Label ID="LabelForumModerators" runat="server" Text="Administrators"></asp:Label>
+			</p>
 		</div>
 	</section>
 
@@ -48,14 +51,14 @@
 							<td>
 								<asp:Label ID="LabelTopicPinned" runat="server" Text="Pinned" CssClass="badge" Visible="false" />
 								<a href="ViewTopic.aspx?id=<%#Eval("Id")%>"><%#Eval("Title")%></a><br />
-								Started by <%#Eval("EerstePost.Member.Name")%>, <abbr class="timeago" title="<%#Eval("EerstePost.CreatedDate", "{0:o}")%>"><%#Eval("EerstePost.CreatedDate", "{0:dd MMM yyyy}")%></abbr> 
+								Started by <%#Eval("EerstePost.Member.Name")%>, <time class="timeago" datetime="<%#Eval("EerstePost.CreatedDate", "{0:o}")%>"><%#Eval("EerstePost.CreatedDate", "{0:dd MMM yyyy}")%></time> 
 							</td>
 							<td>
 								<asp:Label ID="LabelPostsInTopic" runat="server" Text="Label"></asp:Label>
 							</td>
 							<td>
 								<%#Eval("LaatstePost.Member.Name")%><br />
-								<abbr class="timeago" title="<%#Eval("LaatstePost.CreatedDate", "{0:o}")%>"><%#Eval("LaatstePost.CreatedDate", "{0:dd MMM yyyy}")%></abbr>
+								<time class="timeago" datetime="<%#Eval("LaatstePost.CreatedDate", "{0:o}")%>"><%#Eval("LaatstePost.CreatedDate", "{0:dd MMM yyyy}")%></time>
 							</td>
 							<td><asp:CheckBox ID="CheckBoxSelectTopic" runat="server" /></td>
 						</tr>

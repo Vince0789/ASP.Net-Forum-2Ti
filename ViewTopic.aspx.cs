@@ -16,23 +16,42 @@ public partial class ViewTopic : System.Web.UI.Page
 		int topicId;
 
 		if (!int.TryParse(Request.QueryString["id"], out topicId))
-		    throw new HttpException(400, "Bad Request");
+			throw new HttpException(400, "Bad Request");
 
 		Topic topic;
 
 		// bestaand topic?
 		if ((topic = GetTopic(topicId)) == null)
-		    throw new HttpException(404, "Not Found");
+			throw new HttpException(404, "Not Found");
 
 		// ja!
-        (Master as Layout).GenerateBreadCrumb(topic.Forum);
-        (Master.FindControl("BulletedListBreadCrumb") as BulletedList).Items.Add(new ListItem(topic.Title, "#"));
+		(Master as Layout).GenerateBreadCrumb(topic.Forum);
+		(Master.FindControl("BulletedListBreadCrumb") as BulletedList).Items.Add(new ListItem(topic.Title, "#"));
 
 		Page.Title = LiteralTopicTitle.Text = topic.Title;
 		HiddenFieldTopicId.Value = topic.Id.ToString();
 
 		RepeaterPosts.DataSource = topic.Posts.OrderBy(post => post.CreatedDate);
 		RepeaterPosts.DataBind();
+
+		Member member = Session["member"] as Member;
+
+		if (topic.IsLocked)
+		{
+			ButtonReply.CssClass = "btn btn-danger";
+			ButtonReply.Enabled = false;
+			ButtonReply.Text = "Locked";
+			ButtonReply.ToolTip = "This topic is locked. You cannot reply.";
+		}
+		else
+		{
+			if(member == null) // gast
+			{
+				ButtonReply.Enabled = false;
+				ButtonReply.Text = "Login to reply";
+				ButtonReply.ToolTip = "Only registered users can reply to topics.";
+			}
+		}
 	}
 
 	protected Topic GetTopic(int id)
@@ -56,35 +75,38 @@ public partial class ViewTopic : System.Web.UI.Page
 		// post id instellen
 		(e.Item.FindControl("HiddenFieldPostId") as HiddenField).Value = post.Id.ToString();
 
-        // post optie lijst vinden
-        if (member != null)
-        {
-            BulletedList options = e.Item.FindControl("BulletedListPostOptions") as BulletedList;
-            bool isMod = member.IsAdmin() || forum.GetModerators().Contains(member);
+		// post optie lijst vinden
+		if (member != null)
+		{
+			BulletedList options = e.Item.FindControl("BulletedListPostOptions") as BulletedList;
+			bool isMod = member.IsAdmin() || forum.GetModerators().Contains(member);
 
-            // gebruiker kan eigen posts bewerken
-            if (isMod || post.Member.Id == member.Id)
-            {
-                options.Items.Add(new ListItem("Edit", "EditPost.aspx?id=" + post.Id));
-            }
+			// gebruiker kan eigen posts bewerken
+			if (isMod || post.Member.Id == member.Id)
+			{
+				options.Items.Add(new ListItem("Edit", "EditPost.aspx?id=" + post.Id));
+			}
 
-            // toon ip boven post
-            (e.Item.FindControl("PanelModeratorPostDetails") as Panel).Visible = isMod;
+			// toon ip boven post
+			(e.Item.FindControl("PanelModeratorPostDetails") as Panel).Visible = isMod;
 
-            // moderators opties
-            if (isMod)
-            {
-                // eerste post mag niet verwijderd worden
-                if (e.Item.ItemIndex != 0)
-                {
-                    // voeg delete optie toe aan lijst
-                    options.Items.Add(new ListItem("Delete", "DeletePost.aspx?id=" + post.Id));
-                }
-            }
-            
-            // voeg citeer optie toe aan lijst
-            options.Items.Add(new ListItem("Quote", "Reply.aspx"));
-        }		
+			// moderators opties
+			if (isMod)
+			{
+				// eerste post mag niet verwijderd worden
+				if (e.Item.ItemIndex != 0)
+				{
+					// voeg delete optie toe aan lijst
+					options.Items.Add(new ListItem("Delete", "DeletePost.aspx?id=" + post.Id));
+				}
+			}
+
+			if (!post.Topic.IsLocked)
+			{
+				// voeg citeer optie toe aan lijst
+				options.Items.Add(new ListItem("Quote", "Reply.aspx"));
+			}
+		}
 	}
 
 	protected Post GetPostById(int id)
@@ -98,7 +120,7 @@ public partial class ViewTopic : System.Web.UI.Page
 		BulletedList options = sender as BulletedList;
 		RepeaterItem item = options.Parent as RepeaterItem;
 
-		if(options.Items[e.Index].Text == "Quote")
+		if (options.Items[e.Index].Text == "Quote")
 		{
 			Topic topic = GetTopic(int.Parse(HiddenFieldTopicId.Value));
 			Post quotedPost = GetPostById(int.Parse((item.FindControl("HiddenFieldPostId") as HiddenField).Value));

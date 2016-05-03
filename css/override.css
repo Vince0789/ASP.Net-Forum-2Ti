@@ -49,3 +49,7 @@
 .breadcrumb > li + li::before {
 	content: "\003e";
 }
+
+.list-inline {
+	display: inline-block;
+}
