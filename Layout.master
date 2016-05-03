@@ -42,6 +42,7 @@
           <ul class="nav navbar-nav">
             <li class="active"><a href="#">Home</a></li>
           </ul>
+          <asp:ContentPlaceHolder ID="ContentPlaceHolderUserMenu" runat="server"></asp:ContentPlaceHolder>
         </div>
         <!--/.nav-collapse -->
       </div>

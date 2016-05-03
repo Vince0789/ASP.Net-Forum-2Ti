@@ -53,36 +53,38 @@ public partial class ViewTopic : System.Web.UI.Page
 		Member member = Session["member"] as Member;
 		Post post = e.Item.DataItem as Post;
 
-		bool isMod = member.IsAdmin() || forum.GetModerators().Contains(member);
-
 		// post id instellen
 		(e.Item.FindControl("HiddenFieldPostId") as HiddenField).Value = post.Id.ToString();
 
-		// post optie lijst vinden
-		BulletedList options = e.Item.FindControl("BulletedListPostOptions") as BulletedList;
+        // post optie lijst vinden
+        if (member != null)
+        {
+            BulletedList options = e.Item.FindControl("BulletedListPostOptions") as BulletedList;
+            bool isMod = member.IsAdmin() || forum.GetModerators().Contains(member);
 
-		// gebruiker kan eigen posts bewerken
-		if (isMod || post.Member.Id == member.Id)
-		{
-			options.Items.Add(new ListItem("Edit", "EditPost.aspx?id=" + post.Id));
-		}
+            // gebruiker kan eigen posts bewerken
+            if (isMod || post.Member.Id == member.Id)
+            {
+                options.Items.Add(new ListItem("Edit", "EditPost.aspx?id=" + post.Id));
+            }
 
-		// moderators opties
-		if (isMod)
-		{
-			// toon ip boven post
-			(e.Item.FindControl("PanelModeratorPostDetails") as Panel).Visible = true;
+            // toon ip boven post
+            (e.Item.FindControl("PanelModeratorPostDetails") as Panel).Visible = IsMod;
 
-			// eerste post mag niet verwijderd worden
-			if (e.Item.ItemIndex != 0)
-			{
-				// voeg delete optie toe aan lijst
-				options.Items.Add(new ListItem("Delete", "DeletePost.aspx?id=" + post.Id));
-			}
-		}
-
-		// voeg citeer optie toe aan lijst
-		options.Items.Add(new ListItem("Quote", "Reply.aspx"));
+            // moderators opties
+            if (isMod)
+            {
+                // eerste post mag niet verwijderd worden
+                if (e.Item.ItemIndex != 0)
+                {
+                    // voeg delete optie toe aan lijst
+                    options.Items.Add(new ListItem("Delete", "DeletePost.aspx?id=" + post.Id));
+                }
+            }
+            
+            // voeg citeer optie toe aan lijst
+            options.Items.Add(new ListItem("Quote", "Reply.aspx"));
+        }		
 	}
 
 	protected bool IsUserLoggedIn()
