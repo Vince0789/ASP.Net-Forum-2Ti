@@ -41,30 +41,38 @@
 	<!-- topic list -->
 	<asp:Panel ID="PanelTopicList" runat="server">
 		<section>
-			<table class="table">
-				<asp:Repeater ID="RepeaterTopics" runat="server" OnItemDataBound="RepeaterTopics_ItemDataBound">
-					<ItemTemplate>
-						<tr>
-							<td>
-								<asp:Image ID="ImageTopicLocked" runat="server" Width="16" Height="16" ImageUrl="~/images/lock.png" AlternateText="Locked" ToolTip="Locked" Visible="false" />
-							</td>
-							<td>
+			<asp:GridView ID="GridViewTopics" runat="server" CssClass="table" CellSpacing="-1" GridLines="None" OnRowDataBound="GridViewTopics_RowDataBound" OnPageIndexChanged="GridViewTopics_PageIndexChanged" OnPageIndexChanging="GridViewTopics_PageIndexChanging">
+				<Columns>
+					<asp:TemplateField HeaderText="Locked">
+						<ItemTemplate>
+							<asp:Image ID="ImageTopicLocked" runat="server" Width="16" Height="16" ImageUrl="~/images/lock.png" AlternateText="Locked" ToolTip="Locked" Visible="false" />
+						</ItemTemplate>
+					</asp:TemplateField>
+					<asp:TemplateField HeaderText="Title">
+						<ItemTemplate>
 								<asp:Label ID="LabelTopicPinned" runat="server" Text="Pinned" CssClass="badge" Visible="false" />
 								<a href="ViewTopic.aspx?id=<%#Eval("Id")%>"><%#Eval("Title")%></a><br />
 								Started by <%#Eval("EerstePost.Member.Name")%>, <time class="timeago" datetime="<%#Eval("EerstePost.CreatedDate", "{0:o}")%>"><%#Eval("EerstePost.CreatedDate", "{0:dd MMM yyyy}")%></time> 
-							</td>
-							<td>
-								<asp:Label ID="LabelPostsInTopic" runat="server" Text="Label"></asp:Label>
-							</td>
-							<td>
-								<%#Eval("LaatstePost.Member.Name")%><br />
-								<time class="timeago" datetime="<%#Eval("LaatstePost.CreatedDate", "{0:o}")%>"><%#Eval("LaatstePost.CreatedDate", "{0:dd MMM yyyy}")%></time>
-							</td>
-							<td><asp:CheckBox ID="CheckBoxSelectTopic" runat="server" /></td>
-						</tr>
-					</ItemTemplate>
-				</asp:Repeater>
-			</table>
+						</ItemTemplate>
+					</asp:TemplateField>
+					<asp:TemplateField HeaderText="Number of Posts">
+						<ItemTemplate>
+							<asp:Label ID="LabelPostsInTopic" runat="server" Text="Label"></asp:Label>
+						</ItemTemplate>
+					</asp:TemplateField>
+					<asp:TemplateField HeaderText="Last Post">
+						<ItemTemplate>
+							<%#Eval("LaatstePost.Member.Name")%><br />
+							<time class="timeago" datetime="<%#Eval("LaatstePost.CreatedDate", "{0:o}")%>"><%#Eval("LaatstePost.CreatedDate", "{0:dd MMM yyyy}")%></time>
+						</ItemTemplate>
+					</asp:TemplateField>
+					<asp:TemplateField HeaderText="Select">
+						<ItemTemplate>
+							<asp:CheckBox ID="CheckBoxSelectTopic" runat="server" />
+						</ItemTemplate>
+					</asp:TemplateField>
+				</Columns>
+			</asp:GridView>
 		</section>
 		<section>
 			With selected:

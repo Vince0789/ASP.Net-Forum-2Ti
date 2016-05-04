@@ -12,16 +12,7 @@ public partial class ViewForum : System.Web.UI.Page
 		if (IsPostBack)
 			return;
 
-		int forumId;
-
-		if (!int.TryParse(Request.QueryString["id"], out forumId))
-			throw new HttpException(400, "Bad Request");
-
-		Forum forum = new BLForum().GetForumById(forumId);
-
-		if (forum == null)
-			throw new HttpException(404, "Not Found");
-
+		Forum forum = ForumFromQueryString();
 		(Master as Layout).GenerateBreadCrumb(forum);
 
 		Page.Title = forum.Name;
@@ -44,8 +35,12 @@ public partial class ViewForum : System.Web.UI.Page
 
 			HyperLinkNewTopic.NavigateUrl = "NewTopic.aspx?forumId=" + forum.Id;
 
-			RepeaterTopics.DataSource = forum.Topics.OrderByDescending(topic => topic.IsPinned).ThenByDescending(topic => topic.LaatstePost.CreatedDate);
-			RepeaterTopics.DataBind();
+			GridViewTopics.AutoGenerateColumns = false;
+			GridViewTopics.ShowHeader = false;
+			GridViewTopics.AllowPaging = true;
+			GridViewTopics.PagerSettings.Mode = PagerButtons.NumericFirstLast;
+			GridViewTopics.DataSource = forum.Topics.OrderByDescending(topic => topic.IsPinned).ThenByDescending(topic => topic.LaatstePost.CreatedDate).ToList();
+			GridViewTopics.DataBind();
 
 			ListItem[] listItems =
 			{
@@ -58,6 +53,21 @@ public partial class ViewForum : System.Web.UI.Page
 
 			DropDownListTopicAction.Items.AddRange(listItems);
 		}
+	}
+
+	protected Forum ForumFromQueryString()
+	{
+		int forumId;
+
+		if (!int.TryParse(Request.QueryString["id"], out forumId))
+			throw new HttpException(400, "Bad Request");
+
+		Forum forum = new BLForum().GetForumById(forumId);
+
+		if (forum == null)
+			throw new HttpException(404, "Not Found");
+
+		return forum;
 	}
 
 	protected void ListViewSubforums_ItemDataBound(object sender, ListViewItemEventArgs e)
@@ -74,16 +84,33 @@ public partial class ViewForum : System.Web.UI.Page
 		}
 	}
 
-	protected void RepeaterTopics_ItemDataBound(object sender, RepeaterItemEventArgs e)
+	protected void GridViewTopics_RowDataBound(object sender, GridViewRowEventArgs e)
 	{
-		Topic topic = e.Item.DataItem as Topic;
+		if (e.Row.RowType == DataControlRowType.DataRow)
+		{
+			Topic topic = e.Row.DataItem as Topic;
 
-		(e.Item.FindControl("LabelTopicPinned") as Label).Visible = topic.IsPinned;
-		(e.Item.FindControl("ImageTopicLocked") as Image).Visible = topic.IsLocked;
+			(e.Row.FindControl("LabelTopicPinned") as Label).Visible = topic.IsPinned;
+			(e.Row.FindControl("ImageTopicLocked") as Image).Visible = topic.IsLocked;
 
-		Label labelPostsInTopic = e.Item.FindControl("LabelPostsInTopic") as Label;
-		int replies = topic.Posts.Count - 1;
-		labelPostsInTopic.Text = replies.ToString() + "&nbsp;";
-		labelPostsInTopic.Text += (replies == 1) ? "reply" : "replies";
+			Label labelPostsInTopic = e.Row.FindControl("LabelPostsInTopic") as Label;
+			int replies = topic.Posts.Count - 1;
+			labelPostsInTopic.Text = replies.ToString() + "&nbsp;";
+			labelPostsInTopic.Text += (replies == 1) ? "reply" : "replies";
+		}
+	}
+
+	protected void GridViewTopics_PageIndexChanging(object sender, GridViewPageEventArgs e)
+	{
+		Forum forum = ForumFromQueryString();
+
+		GridViewTopics.PageIndex = e.NewPageIndex;
+		GridViewTopics.DataSource = forum.Topics.OrderByDescending(topic => topic.IsPinned).ThenByDescending(topic => topic.LaatstePost.CreatedDate).ToList();
+		GridViewTopics.DataBind();
+	}
+
+	protected void GridViewTopics_PageIndexChanged(object sender, EventArgs e)
+	{
+
 	}
 }
