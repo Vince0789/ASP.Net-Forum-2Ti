@@ -41,7 +41,7 @@
 	<!-- topic list -->
 	<asp:Panel ID="PanelTopicList" runat="server">
 		<section>
-			<asp:GridView ID="GridViewTopics" runat="server" CssClass="table" CellSpacing="-1" GridLines="None" OnRowDataBound="GridViewTopics_RowDataBound" OnPageIndexChanged="GridViewTopics_PageIndexChanged" OnPageIndexChanging="GridViewTopics_PageIndexChanging">
+			<asp:GridView ID="GridViewTopics" runat="server" CssClass="table" CellSpacing="-1" GridLines="None" OnRowDataBound="GridViewTopics_RowDataBound" OnPageIndexChanging="GridViewTopics_PageIndexChanging">
 				<Columns>
 					<asp:TemplateField HeaderText="Locked">
 						<ItemTemplate>
@@ -72,6 +72,7 @@
 						</ItemTemplate>
 					</asp:TemplateField>
 				</Columns>
+				<PagerStyle CssClass="pagination-ys" />
 			</asp:GridView>
 		</section>
 		<section>

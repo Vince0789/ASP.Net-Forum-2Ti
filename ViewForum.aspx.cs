@@ -108,9 +108,4 @@ public partial class ViewForum : System.Web.UI.Page
 		GridViewTopics.DataSource = forum.Topics.OrderByDescending(topic => topic.IsPinned).ThenByDescending(topic => topic.LaatstePost.CreatedDate).ToList();
 		GridViewTopics.DataBind();
 	}
-
-	protected void GridViewTopics_PageIndexChanged(object sender, EventArgs e)
-	{
-
-	}
 }
