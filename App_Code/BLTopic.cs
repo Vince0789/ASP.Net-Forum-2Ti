@@ -15,14 +15,24 @@ public class BLTopic
 		dc = new AspLinqDataContext();
 	}
 
-	public List<Post> GetPostsInTopic(int topicId)
+	public List<Topic> GetTopicsById(List<int> topicIds)
 	{
-		return (from Post in dc.Posts where Post.TopicId == topicId select Post).ToList();
+		return (from Topic in dc.Topics where topicIds.Contains(Topic.Id) select Topic).ToList();
 	}
 
-	public Member GetAuteur(int memberId)
+	public void Delete(Topic topic)
 	{
-		return (from Member in dc.Members where Member.Id == memberId select Member).Single();
+		dc.Posts.DeleteAllOnSubmit(topic.Posts);
+		dc.Topics.DeleteOnSubmit(topic);
+		dc.SubmitChanges();
+	}
+
+	public void Delete(List<Topic> topics)
+	{
+		foreach(Topic topic in topics)
+		{
+			this.Delete(topic);
+		}
 	}
 
 	public void SetPinned(int topicId, bool pinned)
@@ -32,9 +42,9 @@ public class BLTopic
 		dc.SubmitChanges();
 	}
 
-	public void SetPinned(List<int> topicIds, bool pinned)
+	public void SetPinned(List<Topic> topics, bool pinned)
 	{
-		List<Topic> newTopics = (from Topic in dc.Topics where topicIds.Contains(Topic.Id) select Topic).ToList();
+		List<Topic> newTopics = (from Topic in dc.Topics where topics.Contains(Topic) select Topic).ToList();
 
 		foreach(Topic topic in newTopics)
 		{
@@ -51,9 +61,9 @@ public class BLTopic
 		dc.SubmitChanges();
 	}
 
-	public void SetLocked(List<int> topicIds, bool locked)
+	public void SetLocked(List<Topic> topics, bool locked)
 	{
-		List<Topic> newTopics = (from Topic in dc.Topics where topicIds.Contains(Topic.Id) select Topic).ToList();
+		List<Topic> newTopics = (from Topic in dc.Topics where topics.Contains(Topic) select Topic).ToList();
 
 		foreach (Topic topic in newTopics)
 		{

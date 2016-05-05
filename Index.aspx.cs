@@ -14,7 +14,7 @@ public partial class Index : System.Web.UI.Page
 			return;
 
 		// ===== DEBUG DEBUG DEBUG =====
-		Session["member"] = GetMemberById(2);
+		//Session["member"] = GetMemberById(2);
 		// =============================
 
 		Page.Title = "Forum Index";

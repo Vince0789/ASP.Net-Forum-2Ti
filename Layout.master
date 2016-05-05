@@ -37,11 +37,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Project name</a>
+          <a class="navbar-brand" href="index.aspx">Project name</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
+            <li class="active"><a href="index.aspx">Forum</a></li>
           </ul>
           <asp:BulletedList ID="BulletedListUserMenu" runat="server" CssClass="nav navbar-nav navbar-right" DisplayMode="HyperLink"></asp:BulletedList>
         </div>

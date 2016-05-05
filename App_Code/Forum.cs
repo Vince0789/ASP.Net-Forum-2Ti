@@ -19,7 +19,6 @@ public partial class Forum
 		}
 	}
 
-
 	public List<Member> GetModerators()
 	{
 		AspLinqDataContext dc = new AspLinqDataContext();

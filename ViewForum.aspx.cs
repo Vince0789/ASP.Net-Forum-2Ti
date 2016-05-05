@@ -113,8 +113,7 @@ public partial class ViewForum : System.Web.UI.Page
 	protected void ButtonTopicAction_Click(object sender, EventArgs e)
 	{
 		List<int> geselecteerdeTopics = new List<int>();
-		BLTopic blTopic = new BLTopic();
-
+		
 		foreach(GridViewRow row in GridViewTopics.Rows)
 		{
 			if((row.FindControl("CheckBoxSelectTopic") as CheckBox).Checked)
@@ -125,21 +124,25 @@ public partial class ViewForum : System.Web.UI.Page
 
 		if (geselecteerdeTopics.Count > 0)
 		{
+			BLTopic blTopic = new BLTopic();
+			List<Topic> topics = blTopic.GetTopicsById(geselecteerdeTopics);
+
 			switch (DropDownListTopicAction.SelectedValue.ToLowerInvariant())
 			{
 				case "pin":
-					blTopic.SetPinned(geselecteerdeTopics, true);
+					blTopic.SetPinned(topics, true);
 					break;
 				case "unpin":
-					blTopic.SetPinned(geselecteerdeTopics, false);
+					blTopic.SetPinned(topics, false);
 					break;
 				case "lock":
-					blTopic.SetLocked(geselecteerdeTopics, true);
+					blTopic.SetLocked(topics, true);
 					break;
 				case "unlock":
-					blTopic.SetLocked(geselecteerdeTopics, false);
+					blTopic.SetLocked(topics, false);
 					break;
 				case "delete":
+					blTopic.Delete(topics);
 					break;
 			}
 
