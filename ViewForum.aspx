@@ -68,7 +68,8 @@
 					</asp:TemplateField>
 					<asp:TemplateField HeaderText="Select">
 						<ItemTemplate>
-							<asp:CheckBox ID="CheckBoxSelectTopic" runat="server" />
+							<asp:CheckBox ID="CheckBoxSelectTopic" runat="server"/>
+							<asp:HiddenField ID="HiddenFieldTopicId" runat="server" />
 						</ItemTemplate>
 					</asp:TemplateField>
 				</Columns>
@@ -76,8 +77,11 @@
 			</asp:GridView>
 		</section>
 		<section>
-			With selected:
-			<asp:DropDownList ID="DropDownListTopicAction" runat="server"></asp:DropDownList>
+			<div>
+				With selected:
+				<asp:DropDownList ID="DropDownListTopicAction" runat="server" />
+				<asp:Button ID="ButtonTopicAction" runat="server" Text="Go" OnClick="ButtonTopicAction_Click" CssClass="btn btn-btn-default"/>
+			</div>
 			<asp:HyperLink ID="HyperLinkNewTopic" runat="server" CssClass="btn btn-primary pull-right">New topic</asp:HyperLink>
 		</section>
 	</asp:Panel>

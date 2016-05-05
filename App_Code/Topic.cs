@@ -27,4 +27,16 @@ public partial class Topic
             return this.Posts.OrderBy(post => post.CreatedDate).LastOrDefault();
         }
     }
+
+	public void SetPinned(bool pinned)
+	{
+		this.IsPinned = pinned;
+		new BLTopic().SetPinned(this.Id, this.IsPinned);
+	}
+
+	public void SetLocked(bool locked)
+	{
+		this.IsLocked = locked;
+		new BLTopic().SetLocked(this.Id, this.IsLocked);
+	}
 }

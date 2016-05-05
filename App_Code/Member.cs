@@ -20,4 +20,9 @@ public partial class Member
 	{
 		return this.Id == 1;
 	}
+
+	public void UpdatePassword(string newPassword)
+	{
+		new BLMember().UpdatePassword(this, newPassword);
+	}
 }

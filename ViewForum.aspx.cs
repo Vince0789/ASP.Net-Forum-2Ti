@@ -92,6 +92,7 @@ public partial class ViewForum : System.Web.UI.Page
 
 			(e.Row.FindControl("LabelTopicPinned") as Label).Visible = topic.IsPinned;
 			(e.Row.FindControl("ImageTopicLocked") as Image).Visible = topic.IsLocked;
+			(e.Row.FindControl("HiddenFieldTopicId") as HiddenField).Value = topic.Id.ToString();
 
 			Label labelPostsInTopic = e.Row.FindControl("LabelPostsInTopic") as Label;
 			int replies = topic.Posts.Count - 1;
@@ -107,5 +108,42 @@ public partial class ViewForum : System.Web.UI.Page
 		GridViewTopics.PageIndex = e.NewPageIndex;
 		GridViewTopics.DataSource = forum.Topics.OrderByDescending(topic => topic.IsPinned).ThenByDescending(topic => topic.LaatstePost.CreatedDate).ToList();
 		GridViewTopics.DataBind();
+	}
+
+	protected void ButtonTopicAction_Click(object sender, EventArgs e)
+	{
+		List<int> geselecteerdeTopics = new List<int>();
+		BLTopic blTopic = new BLTopic();
+
+		foreach(GridViewRow row in GridViewTopics.Rows)
+		{
+			if((row.FindControl("CheckBoxSelectTopic") as CheckBox).Checked)
+			{
+				geselecteerdeTopics.Add(int.Parse((row.FindControl("HiddenFieldTopicId") as HiddenField).Value));
+			}
+		}
+
+		if (geselecteerdeTopics.Count > 0)
+		{
+			switch (DropDownListTopicAction.SelectedValue.ToLowerInvariant())
+			{
+				case "pin":
+					blTopic.SetPinned(geselecteerdeTopics, true);
+					break;
+				case "unpin":
+					blTopic.SetPinned(geselecteerdeTopics, false);
+					break;
+				case "lock":
+					blTopic.SetLocked(geselecteerdeTopics, true);
+					break;
+				case "unlock":
+					blTopic.SetLocked(geselecteerdeTopics, false);
+					break;
+				case "delete":
+					break;
+			}
+
+			Response.Redirect(Request.RawUrl);
+		}
 	}
 }

@@ -24,4 +24,42 @@ public class BLTopic
 	{
 		return (from Member in dc.Members where Member.Id == memberId select Member).Single();
 	}
+
+	public void SetPinned(int topicId, bool pinned)
+	{
+		Topic newTopic = (from Topic in dc.Topics where Topic.Id == topicId select Topic).Single();
+		newTopic.IsPinned = pinned;
+		dc.SubmitChanges();
+	}
+
+	public void SetPinned(List<int> topicIds, bool pinned)
+	{
+		List<Topic> newTopics = (from Topic in dc.Topics where topicIds.Contains(Topic.Id) select Topic).ToList();
+
+		foreach(Topic topic in newTopics)
+		{
+			topic.IsPinned = pinned;
+		}
+
+		dc.SubmitChanges();
+	}
+
+	public void SetLocked(int topicId, bool locked)
+	{
+		Topic newTopic = (from Topic in dc.Topics where Topic.Id == topicId select Topic).Single();
+		newTopic.IsLocked = locked;
+		dc.SubmitChanges();
+	}
+
+	public void SetLocked(List<int> topicIds, bool locked)
+	{
+		List<Topic> newTopics = (from Topic in dc.Topics where topicIds.Contains(Topic.Id) select Topic).ToList();
+
+		foreach (Topic topic in newTopics)
+		{
+			topic.IsLocked = locked;
+		}
+
+		dc.SubmitChanges();
+	}
 }

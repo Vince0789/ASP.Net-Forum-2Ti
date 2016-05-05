@@ -3,18 +3,20 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolderBody" runat="Server">
 	<div class="row">
 		<div class="col-md-4 col-md-offset-4">
+			<asp:Panel ID="PanelAlert" runat="server" Visible="false">
+				<asp:Label ID="LabelAlertText" runat="server" Text="Alert"></asp:Label>
+			</asp:Panel>
 			<h2 class="form-signin-heading">Please sign in</h2>
-			<label for="inputEmail" class="sr-only">Email address</label>
-			<input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-			<label for="inputPassword" class="sr-only">Password</label>
-			<input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-			<div class="checkbox">
-				<label>
-					<input type="checkbox" value="remember-me">
-					Remember me
-				</label>
+
+			<asp:Label ID="Label1" runat="server" Text="Name" AssociatedControlID="TextBoxName" CssClass="sr-only" />
+			<asp:TextBox ID="TextBoxName" runat="server" />
+
+			<asp:Label ID="Label2" runat="server" Text="Password" AssociatedControlID="TextBoxPassword" CssClass="sr-only" />
+			<asp:TextBox ID="TextBoxPassword" runat="server" TextMode="Password" />
+
+			<div>
+				<asp:Button ID="ButtonLogin" runat="server" Text="Login" CssClass="btn btn-lg btn-primary btn-block" OnClick="ButtonLogin_Click"/>
 			</div>
-			<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 		</div>
 	</div>
 </asp:Content>
