@@ -42,16 +42,23 @@ public partial class ViewForum : System.Web.UI.Page
 			GridViewTopics.DataSource = forum.Topics.OrderByDescending(topic => topic.IsPinned).ThenByDescending(topic => topic.LaatstePost.CreatedDate).ToList();
 			GridViewTopics.DataBind();
 
-			ListItem[] listItems =
+			Member member = Session["member"] as Member;
+
+			if(member != null && member.IsForumModerator(forum))
 			{
+				ListItem[] listItems =
+				{
 					new ListItem("Pin"),
 					new ListItem("Unpin"),
 					new ListItem("Lock"),
 					new ListItem("Unlock"),
 					new ListItem("Delete")
-			};
+				};
 
-			DropDownListTopicAction.Items.AddRange(listItems);
+				DropDownListTopicAction.Items.AddRange(listItems);
+				PanelTopicOptions.Visible = true;
+			}
+
 		}
 	}
 
@@ -89,10 +96,16 @@ public partial class ViewForum : System.Web.UI.Page
 		if (e.Row.RowType == DataControlRowType.DataRow)
 		{
 			Topic topic = e.Row.DataItem as Topic;
+			Member member = Session["member"] as Member;
 
 			(e.Row.FindControl("LabelTopicPinned") as Label).Visible = topic.IsPinned;
 			(e.Row.FindControl("ImageTopicLocked") as Image).Visible = topic.IsLocked;
 			(e.Row.FindControl("HiddenFieldTopicId") as HiddenField).Value = topic.Id.ToString();
+
+			if(member != null && member.IsForumModerator(topic.Forum))
+			{
+				(e.Row.FindControl("CheckBoxSelectTopic") as CheckBox).Visible = true;
+			}
 
 			Label labelPostsInTopic = e.Row.FindControl("LabelPostsInTopic") as Label;
 			int replies = topic.Posts.Count - 1;

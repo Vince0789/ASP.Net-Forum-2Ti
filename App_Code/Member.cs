@@ -21,6 +21,11 @@ public partial class Member
 		return this.Id == 1;
 	}
 
+	public bool IsForumModerator(Forum forum)
+	{
+		return this.IsAdmin() || forum.ForumModerators.Select(fm => fm.Member.Id).Contains(this.Id);
+	}
+
 	public void UpdatePassword(string newPassword)
 	{
 		new BLMember().UpdatePassword(this, newPassword);
