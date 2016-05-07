@@ -15,6 +15,11 @@ public class BLForum
         dc = new AspLinqDataContext();
     }
 
+	public List<Forum> GetAll()
+	{
+		return (from Forum in dc.Forums select Forum).ToList();
+	}
+
     public Forum GetForumById(int id)
     {
         return (from Forum in dc.Forums where Forum.Id == id select Forum).SingleOrDefault();

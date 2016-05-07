@@ -8,7 +8,7 @@ using System.Web;
 /// </summary>
 public partial class Forum
 {
-	protected List<Forum> children;
+	protected IEnumerable<Forum> children;
 
 	public List<Forum> Children
 	{
@@ -16,6 +16,10 @@ public partial class Forum
 		{
 			AspLinqDataContext dc = new AspLinqDataContext();
 			return (from Forum in dc.Forums where Forum.ParentForumId == this.Id select Forum).ToList();
+		}
+		set
+		{
+			this.Children = value;
 		}
 	}
 

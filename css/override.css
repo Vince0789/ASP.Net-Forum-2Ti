@@ -53,3 +53,7 @@
 .list-inline {
 	display: inline-block;
 }
+
+textarea {
+	resize: vertical;
+}
