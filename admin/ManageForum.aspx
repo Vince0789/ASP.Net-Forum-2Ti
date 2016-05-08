@@ -3,6 +3,9 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolderBody" Runat="Server">
 	<h2>Manage Forum: "<asp:Label ID="LabelPageTitle" runat="server" Text="" />"</h2>
 	<section class="form-horizontal">
+		<asp:Panel ID="PanelAlert" runat="server" CssClass="panel panel-default" Visible="false">
+			<asp:Label ID="LabelAlert" runat="server" Text="Label"></asp:Label>
+		</asp:Panel>
 		<div class="form-group">
 			<asp:Label ID="LabelForumName" runat="server" Text="Name" AssociatedControlID="TextBoxForumName"></asp:Label>
 			<asp:TextBox ID="TextBoxForumName" runat="server"></asp:TextBox>
@@ -28,8 +31,15 @@
 			</p>
 		</div>
 		<div class="form-group">
-			<asp:Button ID="ButtonSaveChanges" runat="server" Text="Save Changes" OnClick="ButtonSaveChanges_Click" />
+			<asp:Button ID="ButtonSaveChanges" runat="server" Text="Save Changes" OnClick="ButtonSaveChanges_Click" CssClass="btn btn-primary"/>
+			<asp:Button ID="ButtonDeleteForum" runat="server" Text="Delete this forum" OnClick="ButtonDeleteForum_Click" OnClientClick="return Confirmation();" CssClass="btn btn-danger"/>
 		</div>
 	</section>
+	<script type="text/javascript">
+		function Confirmation()
+		{
+			return confirm("You are about to remove this forum. There is no undoing this action.\nPermanently delete this forum?");
+		}
+	</script>
 </asp:Content>
 

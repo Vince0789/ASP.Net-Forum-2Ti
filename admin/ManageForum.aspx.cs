@@ -10,6 +10,8 @@ public partial class admin_ManageForum : System.Web.UI.Page
 {
 	protected void Page_Load(object sender, EventArgs e)
 	{
+		PanelAlert.Visible = false;
+
 		int forumId;
 
 		if (!int.TryParse(Request.QueryString["id"], out forumId))
@@ -20,7 +22,10 @@ public partial class admin_ManageForum : System.Web.UI.Page
 		Forum forum = blForum.GetForumById(forumId);
 
 		if (forum == null)
-			throw new HttpException(404, "Not Found");
+		{
+			forum = new Forum();
+			forum.Name = "New Forum";
+		}
 
 		LabelPageTitle.Text = forum.Name;
 		Page.Title = "Manage Forum: \"" + forum.Name + "\"";
@@ -45,6 +50,13 @@ public partial class admin_ManageForum : System.Web.UI.Page
 
 		// form vullen
 		Forum forum = new BLForum().GetForumById(int.Parse(Request.QueryString["id"]));
+
+		if(forum == null)
+		{
+			forum = new Forum();
+			ButtonDeleteForum.Visible = false;
+			ButtonSaveChanges.Text = "Create";
+		}
 
 		TextBoxForumName.Text = forum.Name;
 		TextBoxForumDescription.Text = forum.Description;
@@ -76,6 +88,41 @@ public partial class admin_ManageForum : System.Web.UI.Page
 
 	protected void ButtonSaveChanges_Click(object sender, EventArgs e)
 	{
+		BLForum blForum = new BLForum();
+		Forum forum = blForum.GetForumById(int.Parse(Request.QueryString["id"]));
 
+		if(forum == null)
+			forum = new Forum();
+
+		int? parentForumId = int.Parse(DropDownListForumParent.SelectedValue);
+
+		forum.Name = TextBoxForumName.Text;
+		forum.Description = TextBoxForumDescription.Text;
+		forum.ParentForumId = (parentForumId == 0) ? null : parentForumId;
+		forum.IsCategory = CheckBoxForumCategory.Checked;
+
+		if (forum.Id == 0)
+		{
+			blForum.Insert(ref forum);
+		}
+		else
+		{
+			blForum.Update(ref forum);
+		}
+
+		// refresh om tree te updaten
+		Response.Redirect(Request.RawUrl);
+	}
+
+	protected void ButtonDeleteForum_Click(object sender, EventArgs e)
+	{
+
+	}
+
+	protected void ShowAlert(string text, string cssClass = "alert alert-success")
+	{
+		LabelAlert.Text = text;
+		PanelAlert.CssClass = cssClass;
+		PanelAlert.Visible = true;
 	}
 }

@@ -30,4 +30,24 @@ public class BLForum
         AspLinqDataContext dc = new AspLinqDataContext();
         return (from Forum in dc.Forums where Forum.ParentForumId == null select Forum).ToList();
     }
+
+	public void Insert(ref Forum forum)
+	{
+		dc.Forums.InsertOnSubmit(forum);
+		dc.SubmitChanges();
+	}
+
+	public void Update(ref Forum forum)
+	{
+		Forum handle = this.GetForumById(forum.Id);
+
+		handle.Id = forum.Id;
+		handle.Name = forum.Name;
+		handle.Description = forum.Description;
+		handle.ParentForumId = forum.ParentForumId;
+		handle.IsCategory = forum.IsCategory;
+
+		dc.SubmitChanges();
+		forum = handle;
+	}
 }

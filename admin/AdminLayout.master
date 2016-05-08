@@ -65,6 +65,8 @@
 						<div class="panel-body">
 							<asp:TreeView ID="TreeViewForums" runat="server">
 							</asp:TreeView>
+							<hr />
+							<asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/admin/ManageForum.aspx?id=0">Create new forum ...</asp:HyperLink>
 						</div>
 					</section>
 
@@ -76,7 +78,7 @@
 							<asp:Label ID="Label1" runat="server" Text="Search users" AssociatedControlID="TextBoxSearch" />
 							<div class="form-inline">
 								<asp:TextBox ID="TextBoxSearch" runat="server" AutoCompleteType="Search"></asp:TextBox>
-								<asp:Button ID="ButtonSearchUsers" runat="server" Text="Search" />
+								<asp:Button ID="ButtonSearchUsers" runat="server" Text="Search" CssClass="btn btn-default"/>
 							</div>
 						</div>
 					</section>
