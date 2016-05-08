@@ -94,4 +94,14 @@ public partial class AdminLayout : System.Web.UI.MasterPage
 				treeNode.ChildNodes.Add(tnAdd);
 		}
 	}
+
+	protected void ButtonSearchUsers_Click(object sender, EventArgs e)
+	{
+		string query = TextBoxSearch.Text;
+
+		if(!string.IsNullOrWhiteSpace(query))
+		{
+			Response.Redirect("~/admin/SearchUsers.aspx?query=" + Server.UrlEncode(query));
+		}
+	}
 }

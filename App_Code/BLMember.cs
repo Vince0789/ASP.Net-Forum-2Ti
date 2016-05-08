@@ -62,6 +62,11 @@ public class BLMember
 		string hashedPassword = SHA1HashString(password);
 	}
 
+	public List<Member> FindMembersByName(string query)
+	{
+		return (from Member in dc.Members where Member.Name.StartsWith(query) select Member).ToList();
+	}
+
 	public static string SHA1HashString(string s)
 	{
 		byte[] bytes = Encoding.UTF8.GetBytes(s);

@@ -2,7 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolderBody" Runat="Server">
 	<h2>Manage Forum: "<asp:Label ID="LabelPageTitle" runat="server" Text="" />"</h2>
-	<section class="form-horizontal">
+	<section>
 		<asp:Panel ID="PanelAlert" runat="server" CssClass="panel panel-default" Visible="false">
 			<asp:Label ID="LabelAlert" runat="server" Text="Label"></asp:Label>
 		</asp:Panel>

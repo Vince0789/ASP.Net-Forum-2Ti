@@ -78,7 +78,7 @@
 							<asp:Label ID="Label1" runat="server" Text="Search users" AssociatedControlID="TextBoxSearch" />
 							<div class="form-inline">
 								<asp:TextBox ID="TextBoxSearch" runat="server" AutoCompleteType="Search"></asp:TextBox>
-								<asp:Button ID="ButtonSearchUsers" runat="server" Text="Search" CssClass="btn btn-default"/>
+								<asp:Button ID="ButtonSearchUsers" runat="server" Text="Search" CssClass="btn btn-default" OnClick="ButtonSearchUsers_Click"/>
 							</div>
 						</div>
 					</section>
