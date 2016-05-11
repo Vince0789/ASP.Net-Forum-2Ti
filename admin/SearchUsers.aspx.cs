@@ -11,11 +11,23 @@ public partial class admin_SearchUsers : System.Web.UI.Page
 	{
 		PanelAlert.Visible = false;
 
+		for(int i = 'A'; i <= 'Z'; i++)
+		{
+			string letter = Convert.ToChar(i).ToString();
+			HyperLink link = new HyperLink();
+			link.CssClass = "btn btn-default btn-sm";
+			link.NavigateUrl = "~/admin/SearchUsers.aspx?query=" + letter;
+			link.Text = letter;
+
+			PanelAlphabet.Controls.Add(link);
+		}
+
 		if (IsPostBack)
 			return;
 
-		PopulateGridView();
+		Page.Title = "User Management";
 
+		PopulateGridView();
 	}
 
 	protected void GridViewSearchResults_PageIndexChanging(object sender, GridViewPageEventArgs e)

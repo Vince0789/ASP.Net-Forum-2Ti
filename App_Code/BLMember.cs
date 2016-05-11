@@ -53,8 +53,8 @@ public class BLMember
 
 	public bool Delete(Member member)
 	{
-		// admins mogen niet verwijderd worden
-		if (member.IsAdmin() || member.Posts.Count != 0)
+		// moderators en mensen die nog posts hebben mogen niet verwijderd worden
+		if (member.IsAdmin() || member.Posts.Count != 0 || dc.ForumModerators.Select(fm => fm.Member).Contains(member))
 			return false;
 
 		dc.Members.DeleteOnSubmit(member);
