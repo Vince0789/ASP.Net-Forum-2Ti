@@ -2,10 +2,27 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolderBody" Runat="Server">
 	<h2>Results for "<asp:Label ID="LabelQuery" runat="server" Text="Label"></asp:Label>"</h2>
-  <asp:GridView ID="GridViewSearchResults" runat="server" AllowPaging="True" AutoGenerateColumns="False" CssClass="table" CellSpacing="-1" GridLines="None" OnPageIndexChanging="GridViewSearchResults_PageIndexChanging">
+	<asp:Panel ID="PanelAlert" runat="server" Visible="false">
+		<asp:Label ID="LabelAlert" runat="server" Text="Label"></asp:Label>
+	</asp:Panel>
+  <asp:GridView 
+		ID="GridViewSearchResults" 
+		runat="server" 
+		AllowPaging="True" 
+		AllowSorting="True"
+		AutoGenerateColumns="False" 
+		CssClass="table table-hide-options" 
+		DataKeyNames="Id" 
+		OnPageIndexChanging="GridViewSearchResults_PageIndexChanging"
+		OnRowEditing="GridViewSearchResults_RowEditing"
+		OnRowDeleting="GridViewSearchResults_RowDeleting" 
+		OnSorting="GridViewSearchResults_Sorting">
     <Columns>
       <asp:BoundField DataField="Name" HeaderText="Username" />
       <asp:BoundField DataField="RegistrationDate" HeaderText="Member since" DataFormatString="{0:dd MMM yyyy}" />
+    	<asp:BoundField DataField="Posts.Count" DataFormatString="{0:N0}" HeaderText="Posts" />
+    	<asp:CommandField ButtonType="Image" CancelImageUrl="~/images/cross.png" EditImageUrl="~/images/user_edit.png" ShowEditButton="True"/>
+			<asp:CommandField ButtonType="Image" DeleteImageUrl="~/images/user_delete.png" ShowDeleteButton="True" />
     </Columns>
     <PagerStyle CssClass="pagination-ys" />
   </asp:GridView>

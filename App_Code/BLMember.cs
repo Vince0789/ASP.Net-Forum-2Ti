@@ -46,6 +46,22 @@ public class BLMember
 		return newMember;
 	}
 
+	public Member GetMemberById(int id)
+	{
+		return (from Member in dc.Members where Member.Id == id select Member).SingleOrDefault();
+	}
+
+	public bool Delete(Member member)
+	{
+		// admins mogen niet verwijderd worden
+		if (member.IsAdmin() || member.Posts.Count != 0)
+			return false;
+
+		dc.Members.DeleteOnSubmit(member);
+		dc.SubmitChanges();
+		return true;
+	}
+
 	public Member GetNewestMember()
 	{
 		return dc.Members.OrderByDescending(member => member.RegistrationDate).FirstOrDefault();
@@ -64,7 +80,7 @@ public class BLMember
 
 	public List<Member> FindMembersByName(string query)
 	{
-		return (from Member in dc.Members where Member.Name.StartsWith(query) select Member).ToList();
+		return (from Member in dc.Members where Member.Name.StartsWith(query) orderby Member.Name select Member).ToList();
 	}
 
 	public static string SHA1HashString(string s)

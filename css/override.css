@@ -57,3 +57,12 @@
 textarea {
 	resize: vertical;
 }
+
+.table-hide-options input[type="image"] {
+	opacity: 0.25;
+	transition: opacity 0.35s ease-in-out;
+}
+
+.table-hide-options tr:hover input[type="image"] {
+	opacity: 1.0;
+}
