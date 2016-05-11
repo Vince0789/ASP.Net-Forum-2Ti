@@ -15,13 +15,15 @@
 		DataKeyNames="Id" 
 		OnPageIndexChanging="GridViewSearchResults_PageIndexChanging"
 		OnRowEditing="GridViewSearchResults_RowEditing"
+		OnRowCancelingEdit="GridViewSearchResults_RowCancelingEdit"
 		OnRowDeleting="GridViewSearchResults_RowDeleting" 
+		OnRowUpdating="GridViewSearchResults_RowUpdating"
 		OnSorting="GridViewSearchResults_Sorting">
     <Columns>
       <asp:BoundField DataField="Name" HeaderText="Username" />
       <asp:BoundField DataField="RegistrationDate" HeaderText="Member since" DataFormatString="{0:dd MMM yyyy}" />
-    	<asp:BoundField DataField="Posts.Count" DataFormatString="{0:N0}" HeaderText="Posts" />
-    	<asp:CommandField ButtonType="Image" CancelImageUrl="~/images/cross.png" EditImageUrl="~/images/user_edit.png" ShowEditButton="True"/>
+    	<asp:BoundField DataField="Posts.Count" DataFormatString="{0:N0}" HeaderText="Posts" ReadOnly="True" />
+    	<asp:CommandField ButtonType="Image" CancelImageUrl="~/images/cross.png" EditImageUrl="~/images/user_edit.png" ShowEditButton="True" UpdateImageUrl="~/images/tick.png"/>
 			<asp:CommandField ButtonType="Image" DeleteImageUrl="~/images/user_delete.png" ShowDeleteButton="True" />
     </Columns>
     <PagerStyle CssClass="pagination-ys" />

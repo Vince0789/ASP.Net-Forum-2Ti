@@ -62,6 +62,16 @@ public class BLMember
 		return true;
 	}
 
+	public void PrepareUpdate(int memberId, out Member member)
+	{
+		member = this.GetMemberById(memberId);
+	}
+
+	public void Update()
+	{
+		dc.SubmitChanges();
+	}
+
 	public Member GetNewestMember()
 	{
 		return dc.Members.OrderByDescending(member => member.RegistrationDate).FirstOrDefault();
