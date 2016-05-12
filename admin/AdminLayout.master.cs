@@ -12,26 +12,18 @@ public partial class AdminLayout : System.Web.UI.MasterPage
 		if (IsPostBack)
 			return;
 
-		GenerateBreadCrumb(null);
-
 		Member member = (Session["member"] as Member);
 
-		if (member != null)
+		if(member == null || !member.IsAdmin())
 		{
-			BulletedListUserMenu.Items.Add(new ListItem(member.Name, "UserCP.aspx"));
-
-			if (member.IsAdmin())
-			{
-				BulletedListUserMenu.Items.Add(new ListItem("Admin CP", "admin/AdminCP.aspx"));
-			}
-
-			BulletedListUserMenu.Items.Add(new ListItem("Logout", "Login.aspx?do=logout"));
+			Response.Redirect("~/Login.aspx", true);
 		}
-		else
-		{
-			BulletedListUserMenu.Items.Add(new ListItem("Register", "Registration.aspx"));
-			BulletedListUserMenu.Items.Add(new ListItem("Login", "Login.aspx"));
-		}
+
+		GenerateBreadCrumb(null);
+
+		BulletedListUserMenu.Items.Add(new ListItem(member.Name, "UserCP.aspx"));
+		BulletedListUserMenu.Items.Add(new ListItem("Admin CP", "admin/AdminCP.aspx"));
+		BulletedListUserMenu.Items.Add(new ListItem("Logout", "Login.aspx?do=logout"));
 
 		// ---
 
