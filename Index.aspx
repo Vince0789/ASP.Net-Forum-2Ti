@@ -13,7 +13,7 @@
           <asp:ListView ID="ListViewForums" runat="server" OnItemDataBound="ListViewForums_ItemDataBound">
             <ItemTemplate>
                 <div class="panel-body">
-                  <div class="col-sm-9">
+                  <div class="col-sm-8">
                     <h3><a href="ViewForum.aspx?id=<%#Eval("Id")%>"><%#Eval("Name")%></a></h3>
 										<asp:Panel ID="PanelSubforums" runat="server" CssClass="asp-panel-inline">
 											<span class="pull-left">&#x221F;</span>
@@ -21,9 +21,13 @@
 										</asp:Panel>
                     <span class="help-block"><%#Eval("Description")%></span>
                   </div>
-                  <div class="col-sm-3">
+                  <div class="col-sm-2">
                       <strong><asp:Literal ID="LiteralTopicCount" runat="server" Text="0"></asp:Literal></strong> topics<br />
                       <strong><asp:Literal ID="LiteralPostCount" runat="server" Text="0"></asp:Literal></strong> replies<br />
+                  </div>
+                  <div class="col-sm-2">
+                    <asp:HyperLink ID="HyperLinkLastPost" runat="server">HyperLink</asp:HyperLink><br />
+                    <asp:Literal ID="LiteralLastPostInformation" runat="server"></asp:Literal>
                   </div>
                 </div>
             </ItemTemplate>

@@ -70,6 +70,15 @@ public partial class Index : System.Web.UI.Page
 
 			Literal postCount = (Literal)e.Item.FindControl("LiteralPostCount");
 			postCount.Text = (forum.Topics.Sum(topic => topic.Posts.Count)).ToString();
-		}
+
+            HyperLink hyperLinkLastPost = (HyperLink)e.Item.FindControl("HyperLinkLastPost");
+            Literal literalLastPostInformation = (Literal)e.Item.FindControl("LiteralLastPostInformation");
+
+            Topic lastTopic = forum.Topics.OrderByDescending(t => t.LaatstePost.CreatedDate).First();
+
+            hyperLinkLastPost.Text = lastTopic.Title;
+            hyperLinkLastPost.NavigateUrl = "~/ViewTopic.aspx?id=" + lastTopic.Id.ToString();
+            literalLastPostInformation.Text = "By " + lastTopic.LaatstePost.Member.Name + ", " + lastTopic.LaatstePost.CreatedDate.ToShortDateString();
+        }
 	}
 }

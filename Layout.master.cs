@@ -20,7 +20,7 @@ public partial class Layout : System.Web.UI.MasterPage
 
             if(member.IsAdmin())
             {
-                BulletedListUserMenu.Items.Add(new ListItem("Admin CP", "admin/AdminCP.aspx"));
+                BulletedListUserMenu.Items.Add(new ListItem("Admin CP", "~/admin/AdminCP.aspx"));
             }
 
             BulletedListUserMenu.Items.Add(new ListItem("Logout", "Login.aspx?do=logout"));

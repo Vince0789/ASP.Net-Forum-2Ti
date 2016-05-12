@@ -21,9 +21,9 @@ public partial class AdminLayout : System.Web.UI.MasterPage
 
 		GenerateBreadCrumb(null);
 
-		BulletedListUserMenu.Items.Add(new ListItem(member.Name, "UserCP.aspx"));
-		BulletedListUserMenu.Items.Add(new ListItem("Admin CP", "admin/AdminCP.aspx"));
-		BulletedListUserMenu.Items.Add(new ListItem("Logout", "Login.aspx?do=logout"));
+		BulletedListUserMenu.Items.Add(new ListItem(member.Name, "../UserCP.aspx"));
+		BulletedListUserMenu.Items.Add(new ListItem("Admin CP", "AdminCP.aspx"));
+		BulletedListUserMenu.Items.Add(new ListItem("Logout", "../Login.aspx?do=logout"));
 
 		// ---
 
