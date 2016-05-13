@@ -66,3 +66,12 @@ textarea {
 .table-hide-options tr:hover input[type="image"] {
 	opacity: 1.0;
 }
+
+.table-hide-options a {
+	opacity: 0.25;
+	transition: opacity 0.35s ease-in-out;
+}
+
+.table-hide-options tr:hover a {
+	opacity: 1.0;
+}
