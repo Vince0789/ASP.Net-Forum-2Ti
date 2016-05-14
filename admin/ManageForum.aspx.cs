@@ -34,6 +34,10 @@ public partial class admin_ManageForum : System.Web.UI.Page
 		// Page.LoadComplete += new EventHandler(Page_LoadComplete); 
 
 		DropDownListForumParent.Items.Add(new ListItem("(None)", "0"));
+
+        GridViewForumModerators.DataSource = forum.Moderators;
+        GridViewForumModerators.DataKeyNames = new string[] { "Id" };
+        GridViewForumModerators.DataBind();
 	}
 
 	private void Page_LoadComplete(object sender, EventArgs e)

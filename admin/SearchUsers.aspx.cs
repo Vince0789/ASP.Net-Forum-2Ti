@@ -137,5 +137,22 @@ public partial class admin_SearchUsers : System.Web.UI.Page
 		PanelAlert.CssClass = "alert " + cssClass;
 		PanelAlert.Visible = true;
 	}
+
+    protected void GridViewSearchResults_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if(e.CommandName == "AssignModerator")
+        {
+            Response.Redirect("~/admin/AssignModerator.aspx?memberid=" + e.CommandArgument.ToString());
+        }
+    }
+
+    protected void GridViewSearchResults_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if(e.Row.RowType == DataControlRowType.DataRow)
+        {
+            HyperLink assignModerator = e.Row.FindControl("HyperLinkAssignModerator") as HyperLink;
+            assignModerator.NavigateUrl = "~/admin/AssignModerator.aspx?memberId=" + (e.Row.DataItem as Member).Id.ToString();
+        }
+    }
 }
  

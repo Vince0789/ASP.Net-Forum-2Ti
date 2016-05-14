@@ -30,11 +30,26 @@
 				as categories, regardless of this setting.
 			</p>
 		</div>
-		<div class="form-group">
+	</section>
+  <hr />
+  <section>
+    <h3>Assigned moderators</h3>
+    <asp:GridView ID="GridViewForumModerators" runat="server" CssClass="table table-hover table-hide-options" AutoGenerateColumns="False">
+      <Columns>
+        <asp:BoundField DataField="Name" HeaderText="Member" />
+        <asp:CommandField ButtonType="Image" DeleteImageUrl="~/images/key_delete.png" ShowDeleteButton="True" />
+      </Columns>
+      <EmptyDataTemplate>
+        <span class="text-muted">None</span>
+      </EmptyDataTemplate>
+    </asp:GridView>
+  </section>
+  <section>
+    <div class="form-group">
 			<asp:Button ID="ButtonSaveChanges" runat="server" Text="Save Changes" OnClick="ButtonSaveChanges_Click" CssClass="btn btn-primary"/>
 			<asp:Button ID="ButtonDeleteForum" runat="server" Text="Delete this forum" OnClick="ButtonDeleteForum_Click" OnClientClick="return Confirmation();" CssClass="btn btn-danger"/>
 		</div>
-	</section>
+  </section>
 	<script type="text/javascript">
 		function Confirmation()
 		{

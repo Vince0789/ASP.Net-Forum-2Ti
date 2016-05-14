@@ -10,6 +10,7 @@ public partial class Forum
 {
 	protected Forum parent;
 	protected IEnumerable<Forum> children;
+    protected IEnumerable<Member> moderators;
 
 	public Forum Parent
 	{
@@ -37,9 +38,8 @@ public partial class Forum
 		}
 	}
 
-	public List<Member> GetModerators()
-	{
-		AspLinqDataContext dc = new AspLinqDataContext();
-		return (from ForumModerator in dc.ForumModerators where ForumModerator.ForumId == this.Id select ForumModerator.Member).ToList();
-	}
+    public IEnumerable<Member> Moderators
+    {
+        get { return this.ForumModerators.Select(fm => fm.Member).OrderBy(m => m.Name); }
+    }
 }

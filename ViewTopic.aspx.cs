@@ -79,7 +79,7 @@ public partial class ViewTopic : System.Web.UI.Page
 		if (member != null)
 		{
 			BulletedList options = e.Item.FindControl("BulletedListPostOptions") as BulletedList;
-			bool isMod = member.IsAdmin() || forum.GetModerators().Contains(member);
+			bool isMod = member.IsAdmin() || forum.Moderators.Contains(member);
 
 			// gebruiker kan eigen posts bewerken
 			if (isMod || post.Member.Id == member.Id)
