@@ -44,21 +44,29 @@ public partial class ViewForum : System.Web.UI.Page
 
 			Member member = Session["member"] as Member;
 
-			if(member != null && member.IsForumModerator(forum))
+			if(member == null)
 			{
-				ListItem[] listItems =
-				{
-					new ListItem("Pin"),
-					new ListItem("Unpin"),
-					new ListItem("Lock"),
-					new ListItem("Unlock"),
-					new ListItem("Delete")
-				};
-
-				DropDownListTopicAction.Items.AddRange(listItems);
-				PanelTopicOptions.Visible = true;
+				HyperLinkNewTopic.Enabled = false;
+				HyperLinkNewTopic.Attributes.Add("disabled", "disabled");
+				HyperLinkNewTopic.ToolTip = "Only registered members can start new topics.";
 			}
+			else
+			{
+				if(member.IsForumModerator(forum))
+				{
+					ListItem[] listItems =
+					{
+						new ListItem("Pin"),
+						new ListItem("Unpin"),
+						new ListItem("Lock"),
+						new ListItem("Unlock"),
+						new ListItem("Delete")
+					};
 
+					DropDownListTopicAction.Items.AddRange(listItems);
+					PanelTopicOptions.Visible = true;
+				}
+			}
 		}
 	}
 
@@ -83,11 +91,13 @@ public partial class ViewForum : System.Web.UI.Page
 
 		if (forum.Topics.Count > 0)
 		{
+			BLForum blForum = new BLForum();
+
 			Literal topicCount = (Literal)e.Item.FindControl("LiteralTopicCount");
-			topicCount.Text = forum.Topics.Count.ToString();
+			topicCount.Text = blForum.CountAllTopics(forum).ToString();
 
 			Literal postCount = (Literal)e.Item.FindControl("LiteralPostCount");
-			postCount.Text = (forum.Topics.Sum(topic => topic.Posts.Count)).ToString();
+			postCount.Text = blForum.CountAllPosts(forum).ToString();
 		}
 	}
 

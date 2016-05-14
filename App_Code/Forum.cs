@@ -8,7 +8,21 @@ using System.Web;
 /// </summary>
 public partial class Forum
 {
+	protected Forum parent;
 	protected IEnumerable<Forum> children;
+
+	public Forum Parent
+	{
+		get
+		{
+			AspLinqDataContext dc = new AspLinqDataContext();
+			return (from Forum in dc.Forums where Forum.Id == this.ParentForumId select Forum).SingleOrDefault();
+		}
+		set
+		{
+			this.Parent = value;
+		}
+	}
 
 	public List<Forum> Children
 	{

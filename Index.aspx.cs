@@ -65,20 +65,24 @@ public partial class Index : System.Web.UI.Page
 
 		if (forum.Topics.Count > 0)
 		{
+			BLForum blForum = new BLForum();
+
 			Literal topicCount = (Literal)e.Item.FindControl("LiteralTopicCount");
-			topicCount.Text = forum.Topics.Count.ToString();
+			//topicCount.Text = forum.Topics.Count.ToString();
+			topicCount.Text = blForum.CountAllTopics(forum).ToString();
 
 			Literal postCount = (Literal)e.Item.FindControl("LiteralPostCount");
-			postCount.Text = (forum.Topics.Sum(topic => topic.Posts.Count)).ToString();
+			//postCount.Text = (forum.Topics.Sum(topic => topic.Posts.Count)).ToString();
+			postCount.Text = blForum.CountAllPosts(forum).ToString();
 
-            HyperLink hyperLinkLastPost = (HyperLink)e.Item.FindControl("HyperLinkLastPost");
-            Literal literalLastPostInformation = (Literal)e.Item.FindControl("LiteralLastPostInformation");
+			HyperLink hyperLinkLastPost = (HyperLink)e.Item.FindControl("HyperLinkLastPost");
+			Label labelLastPostInformation = (Label)e.Item.FindControl("LabelLastPostInformation");
 
-            Topic lastTopic = forum.Topics.OrderByDescending(t => t.LaatstePost.CreatedDate).First();
+			Topic lastTopic = forum.Topics.OrderByDescending(t => t.LaatstePost.CreatedDate).First();
 
-            hyperLinkLastPost.Text = lastTopic.Title;
-            hyperLinkLastPost.NavigateUrl = "~/ViewTopic.aspx?id=" + lastTopic.Id.ToString();
-            literalLastPostInformation.Text = "By " + lastTopic.LaatstePost.Member.Name + ", " + lastTopic.LaatstePost.CreatedDate.ToShortDateString();
-        }
+			hyperLinkLastPost.Text = lastTopic.Title;
+			hyperLinkLastPost.NavigateUrl = "~/ViewTopic.aspx?id=" + lastTopic.Id.ToString();
+			labelLastPostInformation.Text = "By " + lastTopic.LaatstePost.Member.Name + ", " + lastTopic.LaatstePost.CreatedDate.ToShortDateString();
+		}
 	}
 }

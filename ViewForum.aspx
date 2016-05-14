@@ -52,7 +52,7 @@
 						<ItemTemplate>
 								<asp:Label ID="LabelTopicPinned" runat="server" Text="Pinned" CssClass="badge" Visible="false" />
 								<a href="ViewTopic.aspx?id=<%#Eval("Id")%>"><%#Eval("Title")%></a><br />
-								Started by <%#Eval("EerstePost.Member.Name")%>, <time class="timeago" datetime="<%#Eval("EerstePost.CreatedDate", "{0:o}")%>"><%#Eval("EerstePost.CreatedDate", "{0:dd MMM yyyy}")%></time> 
+								Started by <%#Eval("EerstePost.Member.Name")%>, <time class="timeago" datetime="<%#Eval("EerstePost.CreatedDate", "{0:o}")%>"><%#Eval("EerstePost.CreatedDate", "{0:dddd d MMMM yyyy, HH:mm}")%></time> 
 						</ItemTemplate>
 					</asp:TemplateField>
 					<asp:TemplateField HeaderText="Number of Posts">
@@ -63,7 +63,7 @@
 					<asp:TemplateField HeaderText="Last Post">
 						<ItemTemplate>
 							<%#Eval("LaatstePost.Member.Name")%><br />
-							<time class="timeago" datetime="<%#Eval("LaatstePost.CreatedDate", "{0:o}")%>"><%#Eval("LaatstePost.CreatedDate", "{0:dd MMM yyyy}")%></time>
+							<time class="timeago" datetime="<%#Eval("LaatstePost.CreatedDate", "{0:o}")%>"><%#Eval("LaatstePost.CreatedDate", "{0:dddd d MMMM yyyy, HH:mm}")%></time>
 						</ItemTemplate>
 					</asp:TemplateField>
 					<asp:TemplateField HeaderText="Select">
@@ -74,6 +74,9 @@
 					</asp:TemplateField>
 				</Columns>
 				<PagerStyle CssClass="pagination-ys" />
+				<EmptyDataTemplate>
+					<span class="text-muted">There are no topics in this forum yet.</span>
+				</EmptyDataTemplate>
 			</asp:GridView>
 		</section>
 		<section>

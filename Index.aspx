@@ -17,7 +17,7 @@
                     <h3><a href="ViewForum.aspx?id=<%#Eval("Id")%>"><%#Eval("Name")%></a></h3>
 										<asp:Panel ID="PanelSubforums" runat="server" CssClass="asp-panel-inline">
 											<span class="pull-left">&#x221F;</span>
-											<asp:BulletedList ID="BulletedListSubforums" runat="server" CssClass="list-inline" DisplayMode="HyperLink"></asp:BulletedList>
+											<asp:BulletedList ID="BulletedListSubforums" runat="server" CssClass="list-inline list-subforums" DisplayMode="HyperLink"></asp:BulletedList>
 										</asp:Panel>
                     <span class="help-block"><%#Eval("Description")%></span>
                   </div>
@@ -26,8 +26,8 @@
                       <strong><asp:Literal ID="LiteralPostCount" runat="server" Text="0"></asp:Literal></strong> replies<br />
                   </div>
                   <div class="col-sm-2">
-                    <asp:HyperLink ID="HyperLinkLastPost" runat="server">HyperLink</asp:HyperLink><br />
-                    <asp:Literal ID="LiteralLastPostInformation" runat="server"></asp:Literal>
+                    <asp:HyperLink ID="HyperLinkLastPost" runat="server"></asp:HyperLink><br />
+                    <asp:Label ID="LabelLastPostInformation" runat="server" CssClass="text-muted"></asp:Label>
                   </div>
                 </div>
             </ItemTemplate>

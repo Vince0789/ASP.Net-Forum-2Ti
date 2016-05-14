@@ -66,3 +66,7 @@ textarea {
 .table-hide-options tr:hover input[type="image"] {
 	opacity: 1.0;
 }
+
+ul.list-subforums > li:not(:last-child)::after {
+	content: ',';
+}
