@@ -20,4 +20,21 @@ public class BLPost
 		return dc.Posts.Count();
 	}
 
+	public Post GetPostById(int id)
+	{
+		return (from Post in dc.Posts where Post.Id == id select Post).SingleOrDefault();
+	}
+
+	public void Insert(Post post)
+	{
+		dc.Posts.InsertOnSubmit(post);
+		dc.SubmitChanges();
+	}
+
+	public void Delete(Post post)
+	{
+		dc.Posts.DeleteOnSubmit(post);
+		dc.SubmitChanges();
+	}
+
 }

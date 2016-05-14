@@ -79,7 +79,7 @@ public partial class ViewTopic : System.Web.UI.Page
 		if (member != null)
 		{
 			BulletedList options = e.Item.FindControl("BulletedListPostOptions") as BulletedList;
-			bool isMod = member.IsAdmin() || forum.Moderators.Contains(member);
+			bool isMod = member.IsForumModerator(forum);
 
 			// gebruiker kan eigen posts bewerken
 			if (isMod || post.Member.Id == member.Id)
@@ -109,22 +109,30 @@ public partial class ViewTopic : System.Web.UI.Page
 		}
 	}
 
-	protected Post GetPostById(int id)
-	{
-		AspLinqDataContext dc = new AspLinqDataContext();
-		return (from Post in dc.Posts where Post.Id == id select Post).SingleOrDefault();
-	}
+
 
 	protected void BulletedListPostOptions_Click(object sender, BulletedListEventArgs e)
 	{
+		BLPost blPost = new BLPost();
+
 		BulletedList options = sender as BulletedList;
 		RepeaterItem item = options.Parent as RepeaterItem;
+		Topic topic = GetTopic(int.Parse(HiddenFieldTopicId.Value));
+		Post post = blPost.GetPostById(int.Parse((item.FindControl("HiddenFieldPostId") as HiddenField).Value));
 
-		if (options.Items[e.Index].Text == "Quote")
+		switch(options.Items[e.Index].Text.ToLowerInvariant())
 		{
-			Topic topic = GetTopic(int.Parse(HiddenFieldTopicId.Value));
-			Post quotedPost = GetPostById(int.Parse((item.FindControl("HiddenFieldPostId") as HiddenField).Value));
-			Reply(topic, quotedPost);
+			case "quote":
+			{
+				Reply(topic, post);
+				break;
+			}
+			case "delete":
+			{
+				blPost.Delete(post);
+				Response.Redirect(Request.RawUrl);
+				break;
+			}
 		}
 	}
 
