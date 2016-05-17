@@ -133,6 +133,11 @@ public partial class ViewTopic : System.Web.UI.Page
 				Response.Redirect(Request.RawUrl);
 				break;
 			}
+            default:
+            {
+                Response.Redirect(options.Items[e.Index].Value);
+                break;
+            }
 		}
 	}
 

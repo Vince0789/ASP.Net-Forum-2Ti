@@ -31,6 +31,28 @@ public class BLForum
 		return (from Forum in dc.Forums where Forum.ParentForumId == null select Forum).ToList();
 	}
 
+    public bool AddModerator(Forum forum, Member member)
+    {
+        if (member.IsForumModerator(forum))
+            return false;
+
+        dc.ForumModerators.InsertOnSubmit(new ForumModerator(forum, member));
+        dc.SubmitChanges();
+        return true;
+    }
+
+    public bool RemoveModerator(Forum forum, Member member)
+    {
+        ForumModerator moderator = (from ForumModerator in dc.ForumModerators where ForumModerator.MemberId == member.Id where ForumModerator.ForumId == forum.Id select ForumModerator).SingleOrDefault();
+
+        if (moderator == null)
+            return false;
+
+        dc.ForumModerators.DeleteOnSubmit(moderator);
+        dc.SubmitChanges();
+        return true;
+    }
+
 	public void Insert(ref Forum forum)
 	{
 		dc.Forums.InsertOnSubmit(forum);

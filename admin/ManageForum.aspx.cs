@@ -34,11 +34,15 @@ public partial class admin_ManageForum : System.Web.UI.Page
 		// Page.LoadComplete += new EventHandler(Page_LoadComplete); 
 
 		DropDownListForumParent.Items.Add(new ListItem("(None)", "0"));
+        PopulateGridView(forum);
+	}
 
+    private void PopulateGridView(Forum forum)
+    {
         GridViewForumModerators.DataSource = forum.Moderators;
         GridViewForumModerators.DataKeyNames = new string[] { "Id" };
         GridViewForumModerators.DataBind();
-	}
+    }
 
 	private void Page_LoadComplete(object sender, EventArgs e)
 	{
@@ -129,4 +133,16 @@ public partial class admin_ManageForum : System.Web.UI.Page
 		PanelAlert.CssClass = cssClass;
 		PanelAlert.Visible = true;
 	}
+
+    protected void GridViewForumModerators_RowDeleting(object sender, GridViewDeleteEventArgs e)
+    {
+        BLMember blMember = new BLMember();
+        BLForum blForum = new BLForum();
+
+        Member member = blMember.GetMemberById((int)GridViewForumModerators.DataKeys[e.RowIndex]["Id"]);
+        Forum forum = blForum.GetForumById(int.Parse(Request.QueryString["id"]));
+
+        blForum.RemoveModerator(forum, member);
+        PopulateGridView(forum);
+    }
 }

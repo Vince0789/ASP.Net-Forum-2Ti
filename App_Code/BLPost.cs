@@ -37,4 +37,9 @@ public class BLPost
 		dc.SubmitChanges();
 	}
 
+    public void Update()
+    {
+        dc.SubmitChanges();
+    }
+
 }

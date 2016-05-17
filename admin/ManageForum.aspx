@@ -34,10 +34,10 @@
   <hr />
   <section>
     <h3>Assigned moderators</h3>
-    <asp:GridView ID="GridViewForumModerators" runat="server" CssClass="table table-hover table-hide-options" AutoGenerateColumns="False">
+    <asp:GridView ID="GridViewForumModerators" runat="server" CssClass="table table-hover table-hide-options" AutoGenerateColumns="False" OnRowDeleting="GridViewForumModerators_RowDeleting">
       <Columns>
         <asp:BoundField DataField="Name" HeaderText="Member" />
-        <asp:CommandField ButtonType="Image" DeleteImageUrl="~/images/key_delete.png" ShowDeleteButton="True" />
+        <asp:CommandField ButtonType="Image" DeleteImageUrl="~/images/key_delete.png" ShowDeleteButton="True" HeaderText="Permissions" />
       </Columns>
       <EmptyDataTemplate>
         <span class="text-muted">None</span>

@@ -28,14 +28,15 @@
 				OnRowDeleting="GridViewSearchResults_RowDeleting"
 				OnRowUpdating="GridViewSearchResults_RowUpdating"
 				OnSorting="GridViewSearchResults_Sorting"
-        OnRowCommand="GridViewSearchResults_RowCommand" OnRowDataBound="GridViewSearchResults_RowDataBound">
+        OnRowCommand="GridViewSearchResults_RowCommand" 
+        OnRowDataBound="GridViewSearchResults_RowDataBound">
 				<Columns>
 					<asp:BoundField DataField="Name" HeaderText="Username" />
 					<asp:BoundField DataField="RegistrationDate" HeaderText="Member since" DataFormatString="{0:dd MMM yyyy}" />
 					<asp:BoundField DataField="Posts.Count" DataFormatString="{0:N0}" HeaderText="Posts" ReadOnly="True" />
 					<asp:TemplateField ShowHeader="False">
             <ItemTemplate>
-              <asp:HyperLink ID="HyperLinkAssignModerator" ImageUrl="~/images/key_add.png" runat="server"></asp:HyperLink>
+              <asp:HyperLink ID="HyperLinkAssignModerator" ImageUrl="~/images/key.png" runat="server"></asp:HyperLink>
             </ItemTemplate>
           </asp:TemplateField>
 					<asp:CommandField ButtonType="Image" CancelImageUrl="~/images/cross.png" EditImageUrl="~/images/user_edit.png" ShowEditButton="True" UpdateImageUrl="~/images/tick.png" />

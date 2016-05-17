@@ -1,5 +1,6 @@
 ﻿body {
     padding-top: 70px;
+    padding-bottom: 20px;
 }
 
 .panel-body:not(:last-child) {
@@ -40,6 +41,12 @@
 	position: absolute;
 	right: 15px;
 	bottom: 0px;
+    opacity: 0.25;
+    transition: opacity 0.35s ease-in-out;
+}
+
+.post-panel:hover .post-options {
+    opacity: 1.0;
 }
 
 .asp-panel-inline {
