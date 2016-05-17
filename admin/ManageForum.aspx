@@ -34,6 +34,12 @@
   <hr />
   <section>
     <h3>Assigned moderators</h3>
+    <p class="help-block">
+      Moderators manage a specific forum. They have the ability to edit or delete other users' posts and topics 
+      within that forum. They can also lock topics or pin them to the top of the forum. To assign a user as 
+      moderator, please use the search box to the left. Then click the <img src="../images/key.png" alt="the key"/>-icon 
+      next to his or her name. Below you'll find a list of users currently assigned as moderator of this forum.
+    </p>
     <asp:GridView ID="GridViewForumModerators" runat="server" CssClass="table table-hover table-hide-options" AutoGenerateColumns="False" OnRowDeleting="GridViewForumModerators_RowDeleting">
       <Columns>
         <asp:BoundField DataField="Name" HeaderText="Member" />

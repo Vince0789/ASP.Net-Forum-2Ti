@@ -18,7 +18,7 @@
     <div class="form-inline">
       <div class="form-group">
         <asp:DropDownList ID="DropDownListForums" runat="server"></asp:DropDownList>
-        <asp:Button ID="ButtonAddModerator" runat="server" Text="Add" CssClass="btn btn-primary" />
+        <asp:Button ID="ButtonAddModerator" runat="server" Text="Add" CssClass="btn btn-primary" OnClick="ButtonAddModerator_Click" />
       </div>
     </div>
   </section>

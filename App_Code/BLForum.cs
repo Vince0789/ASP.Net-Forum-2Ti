@@ -36,7 +36,11 @@ public class BLForum
         if (member.IsForumModerator(forum))
             return false;
 
-        dc.ForumModerators.InsertOnSubmit(new ForumModerator(forum, member));
+        ForumModerator moderator = new ForumModerator();
+        moderator.ForumId = forum.Id;
+        moderator.MemberId = member.Id;
+
+        dc.ForumModerators.InsertOnSubmit(moderator);
         dc.SubmitChanges();
         return true;
     }

@@ -10,12 +10,17 @@ public partial class admin_AssignModerator : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        RepeaterPermissions.Visible = false;
-        LabelNoPermissions.Visible = false;
-
         if (IsPostBack)
             return;
 
+        Member member = GetMemberFromQueryString();
+
+        LiteralMemberName.Text = member.Name;
+        PopulateRepeater(member);
+    }
+    
+    protected Member GetMemberFromQueryString()
+    {
         int memberId;
 
         if (!int.TryParse(Request.QueryString["memberId"], out memberId))
@@ -26,18 +31,21 @@ public partial class admin_AssignModerator : System.Web.UI.Page
         if (member == null)
             throw new HttpException(404, "Not Found");
 
-        LiteralMemberName.Text = member.Name;
-        PopulateRepeater(member);
+        return member;
     }
 
     protected void PopulateRepeater(Member member)
     {
+        RepeaterPermissions.Visible = false;
+        LabelNoPermissions.Visible = false;
+
         List<Forum> forums = member.ForumModerators.Select(fm => fm.Forum).OrderBy(f => f.Name).ToList();
 
         if (forums.Count > 0)
         {
             RepeaterPermissions.DataSource = forums;
             RepeaterPermissions.DataBind();
+            RepeaterPermissions.Visible = true;
         }
         else
         {
@@ -93,5 +101,16 @@ public partial class admin_AssignModerator : System.Web.UI.Page
         {
             PrintRecursive(tn);
         }
+    }
+
+    protected void ButtonAddModerator_Click(object sender, EventArgs e)
+    {
+        BLForum blForum = new BLForum();
+
+        Forum forum = blForum.GetForumById(int.Parse(DropDownListForums.SelectedValue));
+        Member member = GetMemberFromQueryString();
+
+        blForum.AddModerator(forum, member);
+        PopulateRepeater(member);
     }
 }
