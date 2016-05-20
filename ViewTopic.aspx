@@ -19,7 +19,7 @@
               <div class="panel panel-default post-panel">
                 <div class="panel-heading">
                   <%#Eval("CreatedDate")%>
-                  <asp:Panel ID="PanelModeratorPostDetails" runat="server" CssClass="asp-panel-inline">
+                  <asp:Panel ID="PanelModeratorPostDetails" runat="server" CssClass="asp-panel-inline" Visible="false">
                     <small class="pull-right text-muted">(IP address: <%#Eval("FromIP")%>) &nbsp; 
 										  <asp:CheckBox ID="CheckBoxSelectPost" runat="server" />
                     </small>
