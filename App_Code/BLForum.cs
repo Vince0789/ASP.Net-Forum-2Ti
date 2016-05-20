@@ -77,6 +77,12 @@ public class BLForum
 		forum = handle;
 	}
 
+	public void Delete(Forum forum)
+	{
+		dc.Forums.DeleteOnSubmit(forum);
+		dc.SubmitChanges();
+	}
+
 	// recursief tellen
 	public int CountAllTopics(Forum forum)
 	{

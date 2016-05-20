@@ -124,7 +124,18 @@ public partial class admin_ManageForum : System.Web.UI.Page
 
 	protected void ButtonDeleteForum_Click(object sender, EventArgs e)
 	{
+		BLForum blForum = new BLForum();
+		Forum forum = blForum.GetForumById(int.Parse(Request.QueryString["id"]));
 
+		if(forum.Children.Count > 0 || forum.Topics.Count > 0)
+		{
+			ShowAlert("This forum cannot be deleted at this time. There are still topics and/or subforums within this forum.", "alert alert-danger");
+		}
+		else
+		{
+			blForum.Delete(forum);
+			Response.Redirect(Request.RawUrl);
+		}
 	}
 
 	protected void ShowAlert(string text, string cssClass = "alert alert-success")
